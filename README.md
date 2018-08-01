@@ -13,7 +13,7 @@ Tool for analyzing smart contracts using mythril
 
 1. Install [mythril](https://github.com/ConsenSys/mythril/wiki/Installation-and-Setup)
 
-2. Install project dependecies:   
+2. Install project dependencies:   
  `$ pip install -r requirements.txt`
 
 3. Go to project scanner dir  
