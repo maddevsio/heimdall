@@ -72,3 +72,4 @@ yarl==1.2.6
 z3-solver==4.8.0.0.post1
 zope.interface==4.5.0
 gunicorn==19.9.0
+firebase-admin==2.12.0

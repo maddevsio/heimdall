@@ -3,7 +3,6 @@ from mythril.analysis.security import fire_lasers
 from mythril.analysis.report import Report 
 from mythril.ether.soliditycontract import SolidityContract
 
-
 ADDRESS = "0x0000000000000000000000000000000000000000"
 
 def mythril_scanner(contract_file):
@@ -13,5 +12,5 @@ def mythril_scanner(contract_file):
     report = Report()
     for issue in issues:                                           
         issue.filename = "test-filename.sol"
-        report.append_issue(issue)
+        report.append_issue(issue)    
     return report
