@@ -10,6 +10,8 @@ from mythril.analysis.report import Report
 
 
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
+CONTRACT_FILE = 'contract.sol'
+ADDRESS = "0x0000000000000000000000000000000000000000"
 
 async def scan(request):
     headers = {
@@ -19,12 +21,11 @@ async def scan(request):
     # Hardcode contract address
     url = 'https://api.github.com/repos/neureal/neureal-token-test/contents/contracts/TESTToken.sol'
     response = requests.get(url, headers=headers)
-    with open('token.sol', 'wb+') as f:
+    with open(CONTRACT_FILE, 'wb+') as f:
         f.write(response.content)
-    contract = SolidityContract('token.sol')
-    address = "0x0000000000000000000000000000000000000000"
-    sym = SymExecWrapper(contract, address=address, strategy="dfs")
-    issues = fire_lasers(sym) 
+    contract = SolidityContract(CONTRACT_FILE)
+    sym = SymExecWrapper(contract, address=ADDRESS, strategy="dfs")
+    issues = fire_lasers(sym)
     report = Report()
     for issue in issues:                                           
         issue.filename = "test-filename.sol"
