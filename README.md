@@ -9,7 +9,7 @@ Tool for analyzing smart contracts using mythril
 - [ ] Add input for getting repo badge
 
 ### Deployment:  
-1. Install [mythril](https://github.com/ConsenSys/mythril/wiki/Installation-and-Setup)
+1. Install [mythril](https://github.com/ConsenSys/mythril/wiki/Installation-and-Setup) via pypi
 2. Install project dependencies:   
  `$ pip install -r requirements.txt`
 3. Go to project scanner dir  
