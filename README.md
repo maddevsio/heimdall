@@ -18,8 +18,9 @@ Tool for analyzing smart contracts using mythril
 [https://github.com/settings/tokens](https://github.com/settings/tokens)
 5. Setup firebase connection:   
 **FIREBASE_CERTIFICATE**   
-Take certificate from Project Settings -> Service account -> Generate new private key
+Take certificate from Project Settings -> Service account -> Generate new private key   
 Place this certificate inside project root.   
+
 **FIREBASE_DATABASE**   
 Database url from Firebase real-time database settings.
 6. Run ginicorn:   
