@@ -17,11 +17,10 @@ Tool for analyzing smart contracts using mythril
 4. Create github personal token:  
 [https://github.com/settings/tokens](https://github.com/settings/tokens)
 5. Setup firebase connection:   
-**FIREBASE_CERTIFICATE**   
+- **FIREBASE_CERTIFICATE**   
 Take certificate from Project Settings -> Service account -> Generate new private key   
 Place this certificate inside project root.   
-
-**FIREBASE_DATABASE**   
+- **FIREBASE_DATABASE**   
 Database url from Firebase real-time database settings.
 6. Run ginicorn:   
 Temporary define large timeout, will be fixed:   
