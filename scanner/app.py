@@ -8,7 +8,7 @@ from firebase_admin import credentials
 from analyzer.mythrilapp import mythril_scanner
 
 from sources.github import fetch_github_contract
-from report import estimate_quality
+from badge import badge_generator
 
 
 FIREBASE_CERTIFICATE = os.environ.get('FIREBASE_CERTIFICATE')
@@ -38,10 +38,13 @@ async def scan(request):
 
 
 async def badge_view(request):
+    status = 'passed'
     report = db.reference(REPO_NAME).get()
     if not report:
         # TODO: send report generation to background task
         generate_report()
         report = db.reference(REPO_NAME).get()
-    estimation = estimate_quality(report)
-    return web.Response(body=estimation, content_type='image/svg+xml')
+
+    if report.get('issues'):
+        status = 'critical'
+    return web.Response(body=badge_generator(status), content_type='image/svg+xml')
