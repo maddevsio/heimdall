@@ -1,7 +1,9 @@
 # Mythril scanner
-Demo:  
-![Mythril Scanner](http://mythril.s0b0lev.com/badge/github)   
 Tool for analyzing smart contracts using mythril
+
+Demo:  
+[![Mythril Scanner](http://mythril.s0b0lev.com/badge)](http://mythril.s0b0lev.com/report)   
+
 
 ### Features:
 
