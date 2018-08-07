@@ -48,11 +48,13 @@ async def scan(request):
 
 
 async def badge_view(request):
-    status = 'passed'
     report = report_get_or_create()
-    if report.get('issues'):
-        status = 'critical'
-    return web.Response(body=badge_generator(status), content_type='image/svg+xml')
+    status = 'critical' if report.get('issues') else 'passed'
+    return web.Response(
+        body=badge_generator(status),
+        content_type='image/svg+xml',
+        headers={'Cache-Control': 'no-cache', 'Expires': '0'}
+    )
 
 
 @aiohttp_jinja2.template('report.jinja2')
