@@ -6,7 +6,7 @@ import os
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 CONTRACT_FILE = 'contract.sol'
 # TODO: remove hardcode
-CONTRACT_URL = 'https://api.github.com/repos/neureal/neureal-token-test/contents/contracts/TESTToken.sol'
+CONTRACT_URL = 'https://api.github.com/repos/maddevsio/neureal-token-test/contents/contracts/TESTToken.sol'
 
 
 def fetch_github_contract():

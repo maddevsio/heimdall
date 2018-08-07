@@ -1,6 +1,7 @@
 import os
 import json
 import firebase_admin
+import aiohttp_jinja2
 
 from aiohttp import web
 from firebase_admin import db
@@ -24,6 +25,15 @@ root = db.reference()
 REPO_NAME = 'neureal'
 
 
+def report_get_or_create():
+    report = db.reference(REPO_NAME).get()
+    if not report:
+        # TODO: send report generation to background task
+        generate_report()
+        report = db.reference(REPO_NAME).get()
+    return report
+
+
 def generate_report():
     contract_path = fetch_github_contract()
     report = mythril_scanner(contract_path)
@@ -39,12 +49,15 @@ async def scan(request):
 
 async def badge_view(request):
     status = 'passed'
-    report = db.reference(REPO_NAME).get()
-    if not report:
-        # TODO: send report generation to background task
-        generate_report()
-        report = db.reference(REPO_NAME).get()
-
+    report = report_get_or_create()
     if report.get('issues'):
         status = 'critical'
     return web.Response(body=badge_generator(status), content_type='image/svg+xml')
+
+
+@aiohttp_jinja2.template('report.jinja2')
+async def report_view(request):
+    report = report_get_or_create()
+    return {
+        'mythril': report
+    }
