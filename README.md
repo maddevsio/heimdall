@@ -1,5 +1,7 @@
 # Mythril scanner
-![Image of Yaktocat](http://mythril.s0b0lev.com/badge)
+Demo:  
+![Mythril Scanner](http://mythril.s0b0lev.com/badge)
+
 Tool for analyzing smart contracts using mythril
 
 ### Features:
