@@ -2,14 +2,14 @@ import os
 import jinja2
 import aiohttp_jinja2
 from aiohttp import web
-from app import scan, badge_view, report_view
+from app import homepage, badge_view, report_view
 
 
 BASE_DIR = os.path.dirname(__file__)
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 def setup_routes(app):
-    app.router.add_get('/', scan)
+    app.router.add_get('/', homepage)
     app.router.add_get('/badge', badge_view)
     app.router.add_get('/report', report_view)
 

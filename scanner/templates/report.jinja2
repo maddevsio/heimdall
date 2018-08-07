@@ -1,35 +1,24 @@
-<html lang="en" class="gr__getbootstrap_com">
-  <head>
-    <meta charset="utf-8">
-    <title>Checkout example for Bootstrap</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  </head>
+{% extends '_layout.jinja2' %}
 
-  <body class="bg-light" data-gr-c-s-loaded="true">
-    <div class="container">
-      <div class="py-5 text-center">
+{% block title %}Mythril Report | {% endblock %}
+
+{% block content %}
+    <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://github.com/ConsenSys/mythril/raw/master/static/mythril.png" alt="" width="72" height="72">
-        <h2>Mythril Report</h2>
-      </div>
-
-      <div class="row">
-        {% for issue in mythril.issues %}
-        <div class="card my-2 {% if issue.type == 'Informational' %}bg-info text-white{% endif %}">
-            <div class="card-body">
-                <h5 class="card-title">Contract {{ issue.contract }} ⟶ {{ issue.title }}</h5>
-                <p><strong>{{ issue.type }}</strong></p>
-                <p><strong>Function</strong> {{ issue.function }}:{{ issue.address }}</p>
-                <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
-                <p><strong>Description:</strong><br>{{ issue.description }}</p>
-            </div>
-        </div>
-            
-        {% endfor %}
-      </div>
-
-      <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2018 <a href="https://maddevs.io">Mad Devs</a></p>
-      </footer>
+        <h2><a href="/">Mythril Report</a></h2>
     </div>
-</body>
-</html>
+
+    <div class="row">
+        {% for issue in mythril.issues %}
+            <div class="card my-2 {% if issue.type == 'Informational' %}bg-info text-white{% endif %}">
+                <div class="card-body">
+                    <h5 class="card-title">Contract {{ issue.contract }} ⟶ {{ issue.title }}</h5>
+                    <p><strong>{{ issue.type }}</strong></p>
+                    <p><strong>Function</strong> {{ issue.function }}:{{ issue.address }}</p>
+                    <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
+                    <p><strong>Description:</strong><br>{{ issue.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

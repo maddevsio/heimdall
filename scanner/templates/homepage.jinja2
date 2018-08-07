@@ -1,0 +1,28 @@
+{% extends '_layout.jinja2' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://github.com/ConsenSys/mythril/raw/master/static/mythril.png" alt="" width="72" height="72">
+        <p class="h2">Add your repo to <br>Mythril Scanner</p>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-md-4">
+            <form>
+                <div class="form-group">
+                    <label>Github Repo url *</label>
+                    <input class="form-control" placeholder="https://github.com/maddevsio/neureal-token-test">
+                </div>
+                <div class="form-group">
+                    <label>Email (optional)</label>
+                    <input class="form-control" type="email">
+                </div>
+                <button class="btn btn-primary">Get my badge</button>
+            </form>
+            <div class="alert alert-info">
+                Email will be used to send notifications about new issues discovered within repository smart contracts
+            </div>
+        </div>
+    </div>
+{% endblock %}

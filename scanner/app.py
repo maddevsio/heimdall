@@ -25,15 +25,6 @@ root = db.reference()
 REPO_NAME = 'neureal'
 
 
-def report_get_or_create():
-    report = db.reference(REPO_NAME).get()
-    if not report:
-        # TODO: send report generation to background task
-        generate_report()
-        report = db.reference(REPO_NAME).get()
-    return report
-
-
 def generate_report():
     contract_path = fetch_github_contract()
     report = mythril_scanner(contract_path)
@@ -42,9 +33,13 @@ def generate_report():
     return data
 
 
-async def scan(request):
-    data = generate_report()
-    return web.json_response(data)
+def report_get_or_create():
+    report = db.reference(REPO_NAME).get()
+    if not report:
+        # TODO: send report generation to background task
+        generate_report()
+        report = db.reference(REPO_NAME).get()
+    return report
 
 
 async def badge_view(request):
@@ -55,6 +50,13 @@ async def badge_view(request):
         content_type='image/svg+xml',
         headers={'Cache-Control': 'no-cache', 'Expires': '0'}
     )
+
+
+@aiohttp_jinja2.template('homepage.jinja2')
+async def homepage(request):
+    return {
+
+    }
 
 
 @aiohttp_jinja2.template('report.jinja2')
