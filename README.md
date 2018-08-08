@@ -1,4 +1,5 @@
-# Mythril scanner
+# Mythril scanner  
+[![CircleCI](https://circleci.com/gh/maddevsio/mythril-scanner/tree/master.svg?style=svg)](https://circleci.com/gh/maddevsio/mythril-scanner/tree/master)  
 Tool for analyzing smart contracts using mythril
 
 Demo:  
