@@ -7,7 +7,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo 'test'"
+            ssh $SSH_USER@$SSH_HOST "cd mythril-scanner && git pull origin master && supervisorctl restart all"
 
 workflows:
   version: 2
