@@ -8,7 +8,8 @@ Demo:
 ### Features:
 
 - [x] Analyze neureal repo
-- [ ] Add health badge
+- [x] Smart contract health badge
+- [x] Report page
 - [ ] Add input for getting repo badge
 
 ### Deployment:  
