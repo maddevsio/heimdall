@@ -7,5 +7,5 @@ def badge_generator(status):
         'passed': 'green',
     }.get(status)
 
-    badge = anybadge.Badge('Mythril Scanner:', status, thresholds=thresholds)
+    badge = anybadge.Badge('Heimdall', status, thresholds=thresholds)
     return badge.badge_svg_text

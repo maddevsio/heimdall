@@ -8,7 +8,7 @@ from firebase_admin import db
 from firebase_admin import credentials
 from analyzer.mythrilapp import mythril_scanner
 
-from sources.github import fetch_github_contract
+from sources.github import fetch_github_contract, github_fetch_smart_contracts
 from badge import badge_generator
 
 
@@ -22,21 +22,23 @@ firebase_admin.initialize_app(cred, {
 
 
 root = db.reference()
-REPO_NAME = 'neureal'
+REPO_NAME = 'maddevsio/neureal-token-test'
 
 
 def generate_report():
-    contract_path = fetch_github_contract()
-    report = mythril_scanner(contract_path)
-    data = json.loads(report.as_json())
-    root.child(REPO_NAME).update(data)
+    smart_contracts = github_fetch_smart_contracts(REPO_NAME)
+    result = []
+    for smart_contract in smart_contracts:
+        report = mythril_scanner(smart_contract)
+        data = json.loads(report.as_json())
+        result.append({'file': smart_contract, 'data': data})
+    root.child(REPO_NAME).update({'report': result})
     return data
 
 
 def report_get_or_create():
     report = db.reference(REPO_NAME).get()
     if not report:
-        # TODO: send report generation to background task
         generate_report()
         report = db.reference(REPO_NAME).get()
     return report
@@ -52,11 +54,15 @@ async def badge_view(request):
     )
 
 
+async def discover_github_repo(request):
+    source = 'maddevsio/neureal-token-test'
+    smart_contract = github_fetch_smart_contracts(source)
+    return web.json_response(smart_contract)
+
+
 @aiohttp_jinja2.template('homepage.jinja2')
 async def homepage(request):
-    return {
-
-    }
+    return {}
 
 
 @aiohttp_jinja2.template('report.jinja2')

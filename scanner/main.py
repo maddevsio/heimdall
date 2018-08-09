@@ -2,7 +2,7 @@ import os
 import jinja2
 import aiohttp_jinja2
 from aiohttp import web
-from app import homepage, badge_view, report_view
+from app import homepage, badge_view, report_view, discover_github_repo
 
 
 BASE_DIR = os.path.dirname(__file__)
@@ -12,6 +12,7 @@ def setup_routes(app):
     app.router.add_get('/', homepage)
     app.router.add_get('/badge', badge_view)
     app.router.add_get('/report', report_view)
+    app.router.add_get('/discover', discover_github_repo)
 
 
 def create_app():
