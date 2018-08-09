@@ -8,8 +8,8 @@ from firebase_admin import db
 from firebase_admin import credentials
 from analyzer.mythrilapp import mythril_scanner
 
-from sources.github import fetch_github_contract, github_fetch_smart_contracts
 from badge import badge_generator
+from sources.github import github_fetch_smart_contracts
 
 
 FIREBASE_CERTIFICATE = os.environ.get('FIREBASE_CERTIFICATE')
@@ -52,12 +52,6 @@ async def badge_view(request):
         content_type='image/svg+xml',
         headers={'Cache-Control': 'no-cache', 'Expires': '0'}
     )
-
-
-async def discover_github_repo(request):
-    source = 'maddevsio/neureal-token-test'
-    smart_contract = github_fetch_smart_contracts(source)
-    return web.json_response(smart_contract)
 
 
 @aiohttp_jinja2.template('homepage.jinja2')
