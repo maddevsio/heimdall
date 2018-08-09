@@ -4,3 +4,4 @@ config/
 *.sol
 firebase-*.json
 .env
+.vscode/
