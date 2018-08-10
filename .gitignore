@@ -1,7 +1,7 @@
 *.pyc
 *__pycache__/*
 config/
-*.sol
+scanner/*.sol
 firebase-*.json
 .env
 .vscode/
