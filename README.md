@@ -3,7 +3,7 @@
 Tool for analyzing smart contracts using mythril
 
 Demo:  
-[![Mythril Scanner](http://mythril.s0b0lev.com/badge/github/maddevsio/heimdall)](http://mythril.s0b0lev.com/report/github/maddevsio/heimdall)   
+[![Mythril Scanner](https://heimdall.s0b0lev.com/badge/github/maddevsio/heimdall)](https://heimdall.s0b0lev.com/report/github/maddevsio/heimdall)   
 
 
 ### Features:
