@@ -15,11 +15,10 @@ GITHUB_REPOS_API = 'https://api.github.com/repos'
 CONTRACT_FILE = 'contract.sol'
 
 
-def github_fetch_smart_contracts(source):
-    owner, repository = source.split('/')
-    repository_files = repository_tree(owner, repository)
+def github_fetch_smart_contracts(owner, repo):
+    repository_files = repository_tree(owner, repo)
     smart_contracts = filter(lambda x: x['path'].endswith('.sol'), repository_files['tree'])
-    return [write_contracts(owner, repository, contract['path']) for contract in smart_contracts]
+    return [write_contracts(owner, repo, contract['path']) for contract in smart_contracts]
 
 
 def repository_tree(owner, repository):

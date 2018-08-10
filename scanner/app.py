@@ -22,30 +22,36 @@ firebase_admin.initialize_app(cred, {
 
 
 root = db.reference()
-REPO_NAME = 'maddevsio/neureal-token-test'
 
 
-def generate_report():
-    smart_contracts = github_fetch_smart_contracts(REPO_NAME)
+def generate_report(owner, repo):
+    smart_contracts = github_fetch_smart_contracts(owner, repo)
     result = []
     for smart_contract in smart_contracts:
-        report = mythril_scanner(smart_contract)
-        data = json.loads(report.as_json())
-        result.append({'file': smart_contract, 'data': data})
-    root.child(REPO_NAME).update({'report': result})
-    return data
+        try:
+            report = mythril_scanner(smart_contract)
+            data = json.loads(report.as_json())
+            result.append({'file': smart_contract, 'data': data})
+        except Exception:
+            # Looks like it is not smart contract
+            pass
+    root.child(f'{owner}/{repo}').update({'report': result})
+    return result
 
 
-def report_get_or_create():
-    report = db.reference(REPO_NAME).get()
+def report_get_or_create(owner, repo):
+    report = db.reference(f'{owner}/{repo}').get()
     if not report:
-        generate_report()
-        report = db.reference(REPO_NAME).get()
+        generate_report(owner, repo)
+        report = db.reference(f'{owner}/{repo}').get()
     return report
 
 
 async def badge_view(request):
-    report = report_get_or_create()
+    owner = request.match_info['owner']
+    repo = request.match_info['repo']
+    # owner, repo
+    report = report_get_or_create(owner, repo)
     status = 'critical' if report.get('issues') else 'passed'
     return web.Response(
         body=badge_generator(status),
@@ -61,7 +67,10 @@ async def homepage(request):
 
 @aiohttp_jinja2.template('report.jinja2')
 async def report_view(request):
-    report = report_get_or_create()
+    owner = request.match_info['owner']
+    repo = request.match_info['repo']
+    # GET owner, repo
+    report = report_get_or_create(owner, repo)
     return {
         'mythril': report
     }

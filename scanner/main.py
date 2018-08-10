@@ -10,8 +10,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 def setup_routes(app):
     app.router.add_get('/', homepage)
-    app.router.add_get('/badge', badge_view)
-    app.router.add_get('/report', report_view)
+    app.router.add_get('/badge/{source}/{owner}/{repo}', badge_view)
+    app.router.add_get('/report/{source}/{owner}/{repo}', report_view)
 
 
 def create_app():
