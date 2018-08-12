@@ -10,6 +10,7 @@ from analyzer.mythrilapp import mythril_scanner
 
 from badge import badge_generator
 from sources.github import github_fetch_smart_contracts
+import operator, functools
 
 
 FIREBASE_CERTIFICATE = os.environ.get('FIREBASE_CERTIFICATE')
@@ -23,6 +24,26 @@ firebase_admin.initialize_app(cred, {
 
 root = db.reference()
 
+def get_report_status(issues):
+    if not issues:
+        return 'passed'
+
+    data = [issue['type'] for issue in issues]
+    if 'Warning' in data:
+        return 'Warning'
+    
+    if 'Informational' in data:
+        return 'Informational'
+
+
+def get_report_status_full(result):
+    data = [item['status'] for item in result]
+    print(data)
+    if 'Warning' in data:
+        return 'critical'
+    if 'Informational' in data:
+        return 'minor'
+    return 'passed'
 
 def generate_report(owner, repo):
     smart_contracts = github_fetch_smart_contracts(owner, repo)
@@ -31,11 +52,13 @@ def generate_report(owner, repo):
         try:
             report = mythril_scanner(smart_contract)
             data = json.loads(report.as_json())
-            result.append({'file': smart_contract, 'data': data})
-        except Exception:
+            status = get_report_status(data.get('issues'))
+            result.append({'file': smart_contract, 'data': data, 'status': status})
+        except Exception as e:
             # Looks like it is not smart contract
             pass
-    root.child(f'{owner}/{repo}').update({'report': result})
+    status = get_report_status_full(result)
+    root.child(f'{owner}/{repo}').update({'report': result, 'badge': status})
     return result
 
 
@@ -50,11 +73,9 @@ def report_get_or_create(owner, repo):
 async def badge_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
-    # owner, repo
     report = report_get_or_create(owner, repo)
-    status = 'critical' if report.get('issues') else 'passed'
     return web.Response(
-        body=badge_generator(status),
+        body=badge_generator(report['badge']),
         content_type='image/svg+xml',
         headers={'Cache-Control': 'no-cache', 'Expires': '0'}
     )
@@ -69,8 +90,19 @@ async def homepage(request):
 async def report_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
-    # GET owner, repo
     report = report_get_or_create(owner, repo)
     return {
-        'mythril': report
+        'mythril': report,
+        'owner': owner,
+        'repo': repo
     }
+
+async def report_view_json(request):
+    owner = request.match_info['owner']
+    repo = request.match_info['repo']
+    report = report_get_or_create(owner, repo)
+    return web.json_response({
+        'mythril': report,
+        'owner': owner,
+        'repo': repo
+    })

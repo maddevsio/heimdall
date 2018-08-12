@@ -7,17 +7,28 @@
         <img class="d-block mx-auto mb-4" src="https://github.com/ConsenSys/mythril/raw/master/static/mythril.png" alt="" width="72" height="72">
         <h2><a href="/">Mythril Report</a></h2>
     </div>
+    <h4>{{ owner }}/{{ repo }}</h4>
+    <hr>
     {% for item in mythril.report %}
-        <h3>{{ item.file }}</h3>
+        <h5>File: {{ item.file }}</h5>
         <div class="row mb-2">
             {% for issue in item.data.issues %}
-                <div class="card my-2 {% if issue.type == 'Informational' %}bg-info text-white{% elif issue.type == 'Warning' %}bg-warning{% endif %}">
+                <div class="card my-2 {% if issue.type == 'Warning' %}bg-warning{% endif %}">
                     <div class="card-body">
-                        <h5 class="card-title">Contract <strong>{{ issue.contract }}</strong> ⟶ <i>{{ issue.title }}</i></h5>
-                        <p><strong>{{ issue.type }}</strong></p>
-                        <p><strong>Function</strong> {{ issue.function }}:{{ issue.address }}</p>
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
+                            </div>
+                            <div class="col-4">
+                                <p class="text-right">{{ issue.type }}</p>
+                            </div>
+                        </div>
+                        <p><strong>Function</strong> {{ issue.function }}:{{ issue.lineno }}</p>
+                        <p><strong>Address</strong> {{ issue.address }}</p>
                         <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
                         <p><strong>Description:</strong><br>{{ issue.description }}</p>
+                        <p><strong>Code</strong></p>
+                        <blockquote class="blockquote">{{ issue.code }}</blockquote>
                     </div>
                 </div>
             {% endfor %}
