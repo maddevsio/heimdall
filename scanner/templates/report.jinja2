@@ -7,24 +7,25 @@
         <img class="d-block mx-auto mb-4" src="https://github.com/ConsenSys/mythril/raw/master/static/mythril.png" alt="" width="72" height="72">
         <h2><a href="/">Mythril Report</a></h2>
     </div>
-    <h4>{{ owner }}/{{ repo }}</h4>
+    <h4><a href="https://github.com/{{ owner }}/{{ repo }}" target="_blank"><i class="fab fa-github"></i> {{ owner }}/{{ repo }}</a></h4>
     <hr>
     {% for item in mythril.report %}
-        <h5>File: {{ item.file }}</h5>
+        <h5>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h5>
         <div class="row mb-2">
             {% for issue in item.data.issues %}
                 <div class="card my-2 {% if issue.type == 'Warning' %}bg-warning{% endif %}">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <h5 class="card-title">Contract {{ issue.contract }}:{{ issue.lineno }} Issue: {{ issue.title }}</h4>
+                                <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
                             </div>
                             <div class="col-4">
                                 <p class="text-right">{{ issue.type }}</p>
                             </div>
                         </div>
-                        <p><strong>Function</strong> {{ issue.function }}</p>
-                        <p><strong>Address</strong> {{ issue.address }}</p>
+                        <p><strong>Path:</strong> {{ item.file }}:{{ issue.lineno }}</p>
+                        <p><strong>Function:</strong> {{ issue.function }}</p>
+                        <p><strong>Address:</strong> {{ issue.address }}</p>
                         <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
                         <p><strong>Description:</strong><br>{{ issue.description }}</p>
                         <p><strong>Code</strong></p>

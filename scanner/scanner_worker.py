@@ -7,14 +7,15 @@ logging.basicConfig(format='%(asctime)s %(message)s', datefmt='[%H:%M:%S]')
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
+
 async def scan_github():
     while True:
-        log.info('Generating report')
+        logging.info('Generating report')
         catalog = root.get()
         for owner, node in catalog.items():
             for repo, _ in node.items():
                 generate_report(owner, repo)
-        log.info('Report generated')
+        logging.info('Report generated')
         await asyncio.sleep(1)
 
 

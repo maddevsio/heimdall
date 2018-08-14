@@ -1,5 +1,6 @@
 import anybadge
 
+
 def badge_generator(status):
     thresholds = {
         'critical': 'red',

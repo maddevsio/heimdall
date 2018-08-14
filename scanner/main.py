@@ -1,12 +1,18 @@
 import os
-import jinja2
+import logging
 import aiohttp_jinja2
+import jinja2
 from aiohttp import web
-from app import homepage, badge_view, report_view, report_view_json
 
+from app import badge_view, homepage, report_view, report_view_json
 
 BASE_DIR = os.path.dirname(__file__)
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
+logging.basicConfig(format='%(asctime)s %(message)s')
+log = logging.getLogger()
+log.setLevel(logging.INFO)
+
 
 def setup_routes(app):
     app.router.add_get('/', homepage)

@@ -1,13 +1,19 @@
+import logging
 from mythril.mythril import Mythril
 
+logging.basicConfig(format='%(asctime)s %(message)s', datefmt='[%H:%M:%S]')
+log = logging.getLogger()
+log.setLevel(logging.INFO)
 
-def mythril_scanner(smart_contracts):
+def mythril_scanner(smart_contract):
+    logging.info(f'[{smart_contract}] Mythril scanner')
     mythril = Mythril(
         solv=None, dynld=False, solc_args=None
     )
-    address, _ = mythril.load_from_solidity(smart_contracts)
+    address, _ = mythril.load_from_solidity([smart_contract, ])
+    logging.info(f'[{smart_contract}] address={address}')
 
-    return mythril.fire_lasers(
+    report = mythril.fire_lasers(
         strategy='dfs',
         address=address,
         modules=[],
@@ -15,3 +21,5 @@ def mythril_scanner(smart_contracts):
         max_depth=22,
         execution_timeout=600
     )
+    logging.info(f'[{smart_contract}] report={report.as_json()}')
+    return report.as_json()

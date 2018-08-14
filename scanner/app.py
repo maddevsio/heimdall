@@ -1,16 +1,17 @@
-import os
+import functools
 import json
-import firebase_admin
+import logging
+import operator
+import os
+
 import aiohttp_jinja2
-
+import firebase_admin
 from aiohttp import web
-from firebase_admin import db
-from firebase_admin import credentials
-from analyzer.mythrilapp import mythril_scanner
+from firebase_admin import credentials, db
 
+from analyzer.mythrilapp import mythril_scanner
 from badge import badge_generator
 from sources.github import github_fetch_smart_contracts
-import operator, functools
 
 
 FIREBASE_CERTIFICATE = os.environ.get('FIREBASE_CERTIFICATE')
@@ -46,14 +47,18 @@ def get_report_status_full(result):
 
 def generate_report(owner, repo):
     smart_contracts = github_fetch_smart_contracts(owner, repo)
+    logging.info(f'[github/{owner}/{repo}] Fetch smart contracts {smart_contracts}')
     result = []
     try:
-        report = mythril_scanner(smart_contracts)
-        data = json.loads(report.as_json())
-        status = get_report_status(data.get('issues'))
-        result.append({'file': smart_contract, 'data': data, 'status': status})
+        for smart_contract in smart_contracts:
+            report = json.loads(mythril_scanner(smart_contract))
+            print('=' * 10)
+            print(type(report))
+            print('=' * 10)
+            status = get_report_status(report.get('issues'))
+            result.append({'file': smart_contract, 'data': report, 'status': status})
     except Exception as e:
-        pass
+        logging.error(f'[github/{owner}/{repo}] {e}')
     status = get_report_status_full(result)
     root.child(f'{owner}/{repo}').update({'report': result, 'badge': status})
     return result
@@ -61,7 +66,9 @@ def generate_report(owner, repo):
 
 def report_get_or_create(owner, repo):
     report = db.reference(f'{owner}/{repo}').get()
+    logging.info(f'[github/{owner}/{repo}] Firebase Report Cache: {report}')
     if not report:
+        logging.info(f'[github/{owner}/{repo}] Start report processing')
         generate_report(owner, repo)
         report = db.reference(f'{owner}/{repo}').get()
     return report
@@ -87,7 +94,9 @@ async def homepage(request):
 async def report_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
+    logging.info(f'[github/{owner}/{repo}] Request report')
     report = report_get_or_create(owner, repo)
+    logging.info(f'[github/{owner}/{repo}] Report sended')
     return {
         'mythril': report,
         'owner': owner,
