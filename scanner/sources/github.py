@@ -16,13 +16,13 @@ GITHUB_REPOS_API = 'https://api.github.com/repos'
 CONTRACT_FILE = 'contract.sol'
 
 
-def github_fetch_smart_contracts(owner, repo):
-    repository_files = repository_tree(owner, repo)
+async def github_fetch_smart_contracts(owner, repo):
+    repository_files = await repository_tree(owner, repo)
     smart_contracts = filter(lambda x: x['path'].endswith('.sol'), repository_files['tree'])
-    return [write_contracts(owner, repo, contract['path']) for contract in smart_contracts]
+    return [await write_contracts(owner, repo, contract['path']) for contract in smart_contracts]
 
 
-def repository_tree(owner, repository):
+async def repository_tree(owner, repository):
     url = f'{GITHUB_REPOS_API}/{owner}/{repository}/git/trees/master?recursive=1'
     response = requests.get(url, headers={
         'Authorization': f'token {GITHUB_TOKEN}',
@@ -31,7 +31,7 @@ def repository_tree(owner, repository):
     return response.json()
 
 
-def fetch_github_contract(owner, repository, path):
+async def fetch_github_contract(owner, repository, path):
     url = f'{GITHUB_REPOS_API}/{owner}/{repository}/contents/{path}'
     response = requests.get(url, headers={
         'Authorization': f'token {GITHUB_TOKEN}',
@@ -40,8 +40,8 @@ def fetch_github_contract(owner, repository, path):
     return response.content
 
 
-def write_contracts(owner, repository, path):
-    smart_contract = fetch_github_contract(owner, repository, path)
+async def write_contracts(owner, repository, path):
+    smart_contract = await fetch_github_contract(owner, repository, path)
     with open(path.split('/')[-1], 'wb+') as f:
         f.write(smart_contract)
     return f.name

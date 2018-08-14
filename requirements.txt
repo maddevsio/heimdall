@@ -75,3 +75,4 @@ gunicorn==19.9.0
 firebase-admin==2.12.0
 anybadge==1.1.1
 aiohttp-jinja2==1.0.0
+aioredis==1.1.0
