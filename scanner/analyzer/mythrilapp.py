@@ -18,8 +18,8 @@ def mythril_scanner(smart_contract):
         address=address,
         modules=[],
         verbose_report=False,
-        max_depth=22,
-        execution_timeout=600
+        max_depth=20,
+        execution_timeout=200
     )
     logging.info(f'[{smart_contract}] report={report.as_json()}')
     return report.as_json()

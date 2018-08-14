@@ -69,7 +69,6 @@ async def report_get_or_create(owner, repo):
     logging.info(f'[github/{owner}/{repo}] Firebase Report Cache: {report}')
     if not report:
         logging.info(f'[github/{owner}/{repo}] Start report processing')
-        await generate_report(owner, repo)
         pub = await aioredis.create_redis(('localhost', 6379))                                     
         res = await pub.publish_json('chan:1', {'owner': owner, 'repo': repo})
         pub.close()
@@ -109,7 +108,7 @@ async def report_view(request):
 async def report_view_json(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
-    report = report_get_or_create(owner, repo)
+    report = await report_get_or_create(owner, repo)
     return web.json_response({
         'mythril': report,
         'owner': owner,

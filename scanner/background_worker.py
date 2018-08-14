@@ -1,6 +1,6 @@
 import aioredis
 import json
-from app import generate_report
+from app import generate_report, root
 
 
 async def background_report(app):
@@ -11,7 +11,10 @@ async def background_report(app):
             data = json.loads(msg)
             owner = data.get('owner')
             repo = data.get('repo')
-            test = await generate_report(owner, repo)
+            instance = root.child(f'{owner}/{repo}')
+            if not instance.get() or not instance.get('processing'):
+                root.child(f'{owner}/{repo}').update({'processing' : True})
+                test = await generate_report(owner, repo)
     except asyncio.CancelledError as e:
         pass
     finally:
