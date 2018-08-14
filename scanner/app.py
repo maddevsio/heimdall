@@ -38,7 +38,6 @@ def get_report_status(issues):
 
 def get_report_status_full(result):
     data = [item['status'] for item in result]
-    print(data)
     if 'Warning' in data:
         return 'critical'
     if 'Informational' in data:
@@ -48,15 +47,13 @@ def get_report_status_full(result):
 def generate_report(owner, repo):
     smart_contracts = github_fetch_smart_contracts(owner, repo)
     result = []
-    for smart_contract in smart_contracts:
-        try:
-            report = mythril_scanner(smart_contract)
-            data = json.loads(report.as_json())
-            status = get_report_status(data.get('issues'))
-            result.append({'file': smart_contract, 'data': data, 'status': status})
-        except Exception as e:
-            # Looks like it is not smart contract
-            pass
+    try:
+        report = mythril_scanner(smart_contracts)
+        data = json.loads(report.as_json())
+        status = get_report_status(data.get('issues'))
+        result.append({'file': smart_contract, 'data': data, 'status': status})
+    except Exception as e:
+        pass
     status = get_report_status_full(result)
     root.child(f'{owner}/{repo}').update({'report': result, 'badge': status})
     return result

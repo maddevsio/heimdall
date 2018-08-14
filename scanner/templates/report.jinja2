@@ -17,13 +17,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
+                                <h5 class="card-title">Contract {{ issue.contract }}:{{ issue.lineno }} Issue: {{ issue.title }}</h4>
                             </div>
                             <div class="col-4">
                                 <p class="text-right">{{ issue.type }}</p>
                             </div>
                         </div>
-                        <p><strong>Function</strong> {{ issue.function }}:{{ issue.lineno }}</p>
+                        <p><strong>Function</strong> {{ issue.function }}</p>
                         <p><strong>Address</strong> {{ issue.address }}</p>
                         <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
                         <p><strong>Description:</strong><br>{{ issue.description }}</p>

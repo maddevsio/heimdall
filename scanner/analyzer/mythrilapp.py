@@ -1,13 +1,11 @@
 from mythril.mythril import Mythril
-from mythril.analysis.report import Report 
 
 
-
-def mythril_scanner(contract_file):
+def mythril_scanner(smart_contracts):
     mythril = Mythril(
         solv=None, dynld=False, solc_args=None
     )
-    address, _ = mythril.load_from_solidity([contract_file, ])
+    address, _ = mythril.load_from_solidity(smart_contracts)
 
     return mythril.fire_lasers(
         strategy='dfs',
