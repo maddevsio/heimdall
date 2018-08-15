@@ -9,30 +9,34 @@
     </div>
     <h4><a href="https://github.com/{{ owner }}/{{ repo }}" target="_blank"><i class="fab fa-github"></i> {{ owner }}/{{ repo }}</a></h4>
     <hr>
-    {% for key, item in mythril.report.items() %}
-        <h5>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h5>
-        {% for issue in item.data.issues %}
-            <div class="row mb-2">
-                <div class="card my-2 {% if issue.type == 'Warning' %}bg-warning{% endif %}">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
+    {% if mythril.report %}
+        {% for key, item in mythril.report.items() %}
+            <h5>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h5>
+            {% for issue in item.data.issues %}
+                <div class="row mb-2">
+                    <div class="card my-2 {% if issue.type == 'Warning' %}bg-warning{% endif %}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <p class="text-right">{{ issue.type }}</p>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <p class="text-right">{{ issue.type }}</p>
-                            </div>
+                            <p><strong>Path:</strong> {{ item.file }}:{{ issue.lineno }}</p>
+                            <p><strong>Function:</strong> {{ issue.function }}</p>
+                            <p><strong>Address:</strong> {{ issue.address }}</p>
+                            <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
+                            <p><strong>Description:</strong><br>{{ issue.description }}</p>
+                            <p><strong>Code</strong></p>
+                            <blockquote class="blockquote">{{ issue.code }}</blockquote>
                         </div>
-                        <p><strong>Path:</strong> {{ item.file }}:{{ issue.lineno }}</p>
-                        <p><strong>Function:</strong> {{ issue.function }}</p>
-                        <p><strong>Address:</strong> {{ issue.address }}</p>
-                        <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
-                        <p><strong>Description:</strong><br>{{ issue.description }}</p>
-                        <p><strong>Code</strong></p>
-                        <blockquote class="blockquote">{{ issue.code }}</blockquote>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    {% else %}
+        <h1>Report generated</h1>
+    {% endif %}
 {% endblock %}
