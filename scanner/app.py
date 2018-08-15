@@ -59,7 +59,7 @@ async def generate_report(owner, repo):
             status = get_report_status(report.get('issues'))
             result.append({'file': smart_contract, 'data': report, 'status': status})
     except Exception as e:
-        logging.error(f'[github/{owner}/{repo}] {e}')
+        logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
     status = get_report_status_full(result)
     return root.child(f'{owner}/{repo}').update({'report': result, 'badge': status})
 

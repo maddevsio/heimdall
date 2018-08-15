@@ -2,23 +2,23 @@ import os
 
 import requests
 
-"""
-Usage:
-Input: github/maddevsio/neureal-test-token
-1. Split to: source, owner, repo
-2. Search all solidity files
-3. Grab solidity file content
-4. Pass path to content to analyzer
-"""
+
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_REPOS_API = 'https://api.github.com/repos'
-
-CONTRACT_FILE = 'contract.sol'
-
+BLACK_LIST = [
+    'Migrations.sol',
+]
 
 async def github_fetch_smart_contracts(owner, repo):
     repository_files = await repository_tree(owner, repo)
-    smart_contracts = filter(lambda x: x['path'].endswith('.sol'), repository_files['tree'])
+    smart_contracts = []
+    for item in repository_files.get('tree'):
+        contract = item.get('path')
+        if contract:
+            contract = contract.split('/')[-1]
+
+        if contract.endswith('.sol') and contract not in BLACK_LIST:
+            smart_contracts.append(item)
     return [await write_contracts(owner, repo, contract['path']) for contract in smart_contracts]
 
 

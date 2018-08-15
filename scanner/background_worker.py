@@ -14,7 +14,7 @@ async def background_report(app):
             instance = root.child(f'{owner}/{repo}')
             if not instance.get() or not instance.get('processing'):
                 root.child(f'{owner}/{repo}').update({'processing' : True})
-                test = await generate_report(owner, repo)
+                await generate_report(owner, repo)
     except asyncio.CancelledError as e:
         pass
     finally:
