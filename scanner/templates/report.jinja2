@@ -9,10 +9,10 @@
     </div>
     <h4><a href="https://github.com/{{ owner }}/{{ repo }}" target="_blank"><i class="fab fa-github"></i> {{ owner }}/{{ repo }}</a></h4>
     <hr>
-    {% for item in mythril.report %}
+    {% for key, item in mythril.report.items() %}
         <h5>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h5>
-        <div class="row mb-2">
-            {% for issue in item.data.issues %}
+        {% for issue in item.data.issues %}
+            <div class="row mb-2">
                 <div class="card my-2 {% if issue.type == 'Warning' %}bg-warning{% endif %}">
                     <div class="card-body">
                         <div class="row">
@@ -32,7 +32,7 @@
                         <blockquote class="blockquote">{{ issue.code }}</blockquote>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     {% endfor %}
 {% endblock %}

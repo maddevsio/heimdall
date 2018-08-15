@@ -51,17 +51,23 @@ def get_report_status_full(result):
 
 async def generate_report(owner, repo):
     smart_contracts = await github_fetch_smart_contracts(owner, repo)
-    logging.info(f'[github/{owner}/{repo}] Fetch smart contracts {smart_contracts}')
-    result = []
+    repository_path = f'{owner}/{repo}'
+    logging.info(f'[github/{repository_path}] Fetch smart contracts: {smart_contracts}')
     try:
         for smart_contract in smart_contracts:
             report = json.loads(mythril_scanner(smart_contract))
-            status = get_report_status(report.get('issues'))
-            result.append({'file': smart_contract, 'data': report, 'status': status})
+            current_report = root.child(f'{repository_path}/report')
+            report_item = current_report.push()
+            report_item.set({
+                'file': smart_contract,
+                'data': report,
+                'status': get_report_status(report.get('issues')),
+            })
     except Exception as e:
         logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
-    status = get_report_status_full(result)
-    return root.child(f'{owner}/{repo}').update({'report': result, 'badge': status})
+    report = root.child(repository_path).get()
+    status = get_report_status_full(report)
+    return root.child(repository_path).update({'badge': status, 'processing': False})
 
 
 async def report_get_or_create(owner, repo):
