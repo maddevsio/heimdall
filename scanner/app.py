@@ -24,7 +24,6 @@ firebase_admin.initialize_app(cred, {
     'databaseURL' : FIREBASE_DATABASE
 })
 
-
 root = db.reference()
 
 
@@ -53,19 +52,20 @@ async def generate_report(owner, repo):
     smart_contracts = await github_fetch_smart_contracts(owner, repo)
     repository_path = f'{owner}/{repo}'
     logging.info(f'[github/{repository_path}] Fetch smart contracts: {smart_contracts}')
+    root.child(repository_path).update({'processing': True})
     for smart_contract in smart_contracts:
         logging.info(f'[github/{owner}/{repo}] Processing contract: {smart_contract}')
         try:
             report = json.loads(mythril_scanner(smart_contract))
             current_report = root.child(f'{repository_path}/report')
-            report_item = current_report.set({
-                [smart_contract]: {
-                    'file': smart_contract,
-                    'data': report,
-                    'status': await get_report_status(report.get('issues')),
-                }
-            })
-
+            item = {
+                'file': smart_contract,
+                'data': report,
+                'status': await get_report_status(report.get('issues')),
+            }
+            node = current_report.child(smart_contract.replace('.', '-'))
+            node.set(item)
+            logging.info(f'[github/{owner}/{repo}] Report item: {item}')
         except Exception as e:
             logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
             pass
