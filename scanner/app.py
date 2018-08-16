@@ -58,12 +58,14 @@ async def generate_report(owner, repo):
         try:
             report = json.loads(mythril_scanner(smart_contract))
             current_report = root.child(f'{repository_path}/report')
-            report_item = current_report.push()
-            report_item.set({
-                'file': smart_contract,
-                'data': report,
-                'status': await get_report_status(report.get('issues')),
+            report_item = current_report.set({
+                [smart_contract]: {
+                    'file': smart_contract,
+                    'data': report,
+                    'status': await get_report_status(report.get('issues')),
+                }
             })
+
         except Exception as e:
             logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
             pass
