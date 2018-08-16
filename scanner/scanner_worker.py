@@ -14,7 +14,7 @@ async def scan_github():
         catalog = root.get()
         for owner, node in catalog.items():
             for repo, _ in node.items():
-                generate_report(owner, repo)
+                await generate_report(owner, repo)
         logging.info('Report generated')
         await asyncio.sleep(1)
 
