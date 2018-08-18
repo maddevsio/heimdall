@@ -24,11 +24,10 @@ firebase_admin.initialize_app(cred, {
     'databaseURL' : FIREBASE_DATABASE
 })
 
-
 root = db.reference()
 
 
-def get_report_status(issues):
+async def get_report_status(issues):
     if not issues:
         return 'passed'
 
@@ -40,8 +39,8 @@ def get_report_status(issues):
         return 'Informational'
 
 
-def get_report_status_full(result):
-    data = [item['status'] for item in result]
+async def get_report_status_full(result):
+    data = [item['status'] for k, item in result.get('report', {}).items()]
     if 'Warning' in data:
         return 'critical'
     if 'Informational' in data:
@@ -51,17 +50,30 @@ def get_report_status_full(result):
 
 async def generate_report(owner, repo):
     smart_contracts = await github_fetch_smart_contracts(owner, repo)
-    logging.info(f'[github/{owner}/{repo}] Fetch smart contracts {smart_contracts}')
-    result = []
-    try:
-        for smart_contract in smart_contracts:
+    repository_path = f'{owner}/{repo}'
+    logging.info(f'[github/{repository_path}] Fetch smart contracts: {smart_contracts}')
+    root.child(repository_path).update({'processing': True})
+    for smart_contract in smart_contracts:
+        logging.info(f'[github/{owner}/{repo}] Processing contract: {smart_contract}')
+        try:
             report = json.loads(mythril_scanner(smart_contract))
-            status = get_report_status(report.get('issues'))
-            result.append({'file': smart_contract, 'data': report, 'status': status})
-    except Exception as e:
-        logging.error(f'[github/{owner}/{repo}] {e}')
-    status = get_report_status_full(result)
-    return root.child(f'{owner}/{repo}').update({'report': result, 'badge': status})
+            current_report = root.child(f'{repository_path}/report')
+            item = {
+                'file': smart_contract,
+                'data': report,
+                'status': await get_report_status(report.get('issues')),
+            }
+            node = current_report.child(smart_contract.replace('.', '-'))
+            node.set(item)
+            logging.info(f'[github/{owner}/{repo}] Report item: {item}')
+        except Exception as e:
+            logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
+            pass
+    report = root.child(repository_path).get()
+    status = await get_report_status_full(report)
+    logging.info(f'[github/{owner}/{repo}] status: {status}')
+    root.child(repository_path).update({'badge': status, 'processing': False})
+    return report
 
 
 async def report_get_or_create(owner, repo):

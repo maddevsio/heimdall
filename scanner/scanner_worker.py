@@ -10,12 +10,12 @@ log.setLevel(logging.INFO)
 
 async def scan_github():
     while True:
-        logging.info('Generating report')
         catalog = root.get()
         for owner, node in catalog.items():
             for repo, _ in node.items():
-                generate_report(owner, repo)
-        logging.info('Report generated')
+                logging.info(f'[github/{owner}/{repo}] Processing contract')
+                report = await generate_report(owner, repo)
+                logging.info(f'[github/{owner}/{repo}] Rerport ready: ', report)
         await asyncio.sleep(1)
 
 
