@@ -20,6 +20,8 @@ Follow next steps for getting heimdall badge:
 </a>
 ```
 
+Notes: replace **owner** and **github** url path.
+
 ### Deployment:  
 1. Install [mythril](https://github.com/ConsenSys/mythril/wiki/Installation-and-Setup) via pypi
 Mythril require additional setup doc from mythril source code:
