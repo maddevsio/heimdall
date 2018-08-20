@@ -3,7 +3,9 @@
 
 {% block content %}
   <style>
-    // SASS Variables.
+    .hide {
+      display: none;
+    }
     canvas {
       display: block;
       vertical-align: bottom;
@@ -28,22 +30,71 @@
       background: rgba(0, 0, 0, 0.4);
       text-shadow: 0px 0px 2px #131415;
     }
+
   </style>
   <script>
     window.onload = function() {
       Particles.init({
         selector: '#particles-js',
         connectParticles: true,
+        maxParticles: 150,
         color: ['#DA0463', '#404B69', '#DBEDF3'],
+        responsive: [{
+          breakpoint: 300,
+          options: {
+            color: '#00C9B1',
+            maxParticles: 60,
+            connectParticles: true
+          }
+        },
+        {
+          breakpoint: 1000,
+          options: {
+            color: ['#DA0463', '#404B69', '#DBEDF3'],
+            maxParticles: 100,
+            connectParticles: true
+          }
+        }]
       });
     };
   </script>
   <canvas id="particles-js"></canvas>
   <div class="section text">
-    <div class="container">
+    <div class="step-1">
       <h3 class="section-heading">Heimdall</h3>
       <p class="section-description">Ethereum Smart Contracts Security Monitoring</p>
-      <a class="button button-primary" href="http://getskeleton.com">Get badge</a>
+      <button class="button button-primary badge-generator">Get the badge</button>
     </div>
+    <div class="step-2 form hide">
+      <div>
+        <label>Github repository path (owner/repository)</label>
+        <input type="text" class="repo-path" placeholder="maddevsio/heimdall">
+      </div>
+      <button class="button button-primary get-badge">Markdown code</button>
+    </div>
+    <div class="step-3 markdown hide">
+    </div>  
   </div>
+  
+  <script>
+    $(function(){
+      var btn = $('.badge-generator');
+      var form = $('.form');
+      var getBadge = $('.get-badge');
+      var repoPath = $('.repo-path');
+      var markdown = $('.markdown');
+      btn.on('click', function(e){
+        form.show();
+        btn.hide();
+        $('.step-1').hide();
+      });
+      getBadge.on('click', function(){
+        var path = repoPath.val();
+        markdown.html(`[![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/${path})](https://heimdall.maddevs.io/report/github/${path})`)
+        markdown.show();
+        $('.step-2').hide();
+        $('.step-3').show();
+      })
+    });
+  </script>
 {% endblock %}
