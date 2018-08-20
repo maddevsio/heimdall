@@ -3,40 +3,77 @@
 {% block title %}Mythril Report | {% endblock %}
 
 {% block content %}
-    <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://github.com/ConsenSys/mythril/raw/master/static/mythril.png" alt="" width="72" height="72">
-        <h2><a href="/">Mythril Report</a></h2>
-    </div>
-    <h4><a href="https://github.com/{{ owner }}/{{ repo }}" target="_blank"><i class="fab fa-github"></i> {{ owner }}/{{ repo }}</a></h4>
-    <hr>
-    {% if mythril.report %}
-        {% for key, item in mythril.report.items() %}
-            <h5>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h5>
-            {% for issue in item.data.issues %}
-                <div class="row mb-2">
-                    <div class="card my-2 {% if issue.type == 'Warning' %}bg-warning{% endif %}">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-8">
-                                    <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
-                                </div>
-                                <div class="col-4">
-                                    <p class="text-right">{{ issue.type }}</p>
-                                </div>
+    <style>
+        canvas { 
+            height: 100vh; 
+            width: 100vw; 
+            display: block;
+          }
+        .container {
+            background: rgba(255, 255, 255, 0.88);
+            overflow: overlay;
+            overflow-y: scroll;
+            height: -webkit-fill-available;
+            padding: 20px 10px;
+        }
+    </style>
+    <div class="container text-section">
+        <div class="row">
+            <div class="six columns">
+                <h2><a href="/">Heimdall Report</a></h2>
+            </div>
+            <div class="six columns">
+                <p class="text-right"><small>powered by mythril</small>
+            </div>
+        </div>
+        
+        <h4><a href="https://github.com/{{ owner }}/{{ repo }}" target="_blank"><i class="fab fa-github"></i> {{ owner }}/{{ repo }}</a></h4>
+        <hr>
+        {% if mythril.report %}
+            {% for key, item in mythril.report.items() %}
+                <h3>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h3>
+                {% for issue in item.data.issues %}
+                    <div class="{% if issue.type == 'Warning' %}bg-warning{% endif %}">
+                        <div class="row">
+                            <div class="eight columns">
+                                <h5 class="card-title">Contract {{ issue.contract }} Issue: {{ issue.title }}</h4>
                             </div>
-                            <p><strong>Path:</strong> {{ item.file }}:{{ issue.lineno }}</p>
-                            <p><strong>Function:</strong> {{ issue.function }}</p>
-                            <p><strong>Address:</strong> {{ issue.address }}</p>
-                            <p><strong>Debug:</strong><br>{{ issue.debug }}</p>
-                            <p><strong>Description:</strong><br>{{ issue.description }}</p>
-                            <p><strong>Code</strong></p>
-                            <blockquote class="blockquote">{{ issue.code }}</blockquote>
+                            <div class="four columns">
+                                <p class="text-right">{{ issue.type }}</p>
+                            </div>
                         </div>
+                        <table class="u-full-width">
+                            <tr>
+                                <td>Path</td>
+                                <td>{{ item.file }}:{{ issue.lineno }}</td>
+                            </tr>
+                            <tr>
+                                <td>Function</td>
+                                <td>{{ issue.function }}</td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td>{{ issue.address }}</td>
+                            </tr>
+                            <tr>
+                                <td>Debug</td>
+                                <td>{{ issue.debug }}</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>{{ issue.description }}</td>
+                            </tr>
+                            <tr>
+                                <td>Code</td>
+                                <td>{{ issue.code }}</td>
+                            </tr>
+                        </table>
                     </div>
-                </div>
+                    <hr>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    {% else %}
-        <h1>Report generated</h1>
-    {% endif %}
+        {% else %}
+            <h1>Report generated</h1>
+        {% endif %}
+    </div>
 {% endblock %}

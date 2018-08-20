@@ -92,8 +92,9 @@ async def badge_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
     report = await report_get_or_create(owner, repo)
+    badge = report.get('badge', 'processing')
     return web.Response(
-        body=badge_generator(report['badge']),
+        body=badge_generator(badge),
         content_type='image/svg+xml',
         headers={'Cache-Control': 'no-cache', 'Expires': '0'}
     )
