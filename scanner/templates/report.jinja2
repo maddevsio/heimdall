@@ -4,6 +4,9 @@
 
 {% block content %}
     <style>
+        .text-center {
+            text-align: center;
+        }
         canvas { 
             height: 100vh; 
             width: 100vw; 
@@ -73,7 +76,7 @@
                 {% endfor %}
             {% endfor %}
         {% else %}
-            <h1>Report generated</h1>
+            <h1 class="text-center"><i class="fas fa-spinner fa-pulse"></i> Processing report...</h1>
         {% endif %}
     </div>
 {% endblock %}

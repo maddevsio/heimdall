@@ -91,8 +91,11 @@ async def report_get_or_create(owner, repo):
 async def badge_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
-    report = await report_get_or_create(owner, repo)
-    badge = report.get('badge', 'processing')
+    await report_get_or_create(owner, repo)
+    report = db.reference(f'{owner}/{repo}').get()
+    badge = 'processing'
+    if report:
+        badge = report.get('badge', 'processing')
     return web.Response(
         body=badge_generator(badge),
         content_type='image/svg+xml',
@@ -110,7 +113,8 @@ async def report_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
     logging.info(f'[github/{owner}/{repo}] Request report')
-    report = await report_get_or_create(owner, repo)
+    await report_get_or_create(owner, repo)
+    report = db.reference(f'{owner}/{repo}').get()
     logging.info(f'[github/{owner}/{repo}] Report sended')
     return {
         'mythril': report,
