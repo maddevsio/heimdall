@@ -5,13 +5,22 @@ Tool for analyzing smart contracts using mythril
 Demo:  
 [![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/maddevsio/heimdall)](https://heimdall.maddevs.io/report/github/maddevsio/heimdall)   
 
+### Usage:
+Follow next steps for getting heimdall badge:
+1. Badge URL: `https://heimdall.maddevs.io/badge/github/<owner>/<repository>`
+2. Report URL: `https://heimdall.maddevs.io/report/github/<owner>/<repository>`
+3. Markdown badge:
+```
+[![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/<owner>/<repository>)](https://heimdall.maddevs.io/report/github/<owner>/<repository>) 
+```
+4. HTML badge:
+```
+<a href="https://heimdall.maddevs.io/report/github/<owner>/<repository>">
+    <img src="https://heimdall.maddevs.io/badge/github/<owner>/<repository>">
+</a>
+```
 
-### Features:
-
-- [x] Analyze neureal repo
-- [x] Smart contract health badge
-- [x] Report page
-- [ ] Add input for getting repo badge
+Notes: replace **owner** and **github** url path.
 
 ### Deployment:  
 1. Install [mythril](https://github.com/ConsenSys/mythril/wiki/Installation-and-Setup) via pypi

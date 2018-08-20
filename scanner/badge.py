@@ -7,5 +7,5 @@ def badge_generator(status):
         'minor': 'yellow',
         'passed': 'green',
     }
-    badge = anybadge.Badge('Heimdall', status, thresholds=thresholds)
+    badge = anybadge.Badge('Smart Contracts', status, thresholds=thresholds)
     return badge.badge_svg_text
