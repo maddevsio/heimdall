@@ -5,13 +5,7 @@ Tool for analyzing smart contracts using mythril
 Demo:  
 [![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/maddevsio/heimdall)](https://heimdall.maddevs.io/report/github/maddevsio/heimdall)   
 
-
-### Features:
-
-- [x] Analyze neureal repo
-- [x] Smart contract health badge
-- [x] Report page
-- [ ] Add input for getting repo badge
+### Usage:
 
 ### Deployment:  
 1. Install [mythril](https://github.com/ConsenSys/mythril/wiki/Installation-and-Setup) via pypi
