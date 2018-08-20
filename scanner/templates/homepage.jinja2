@@ -67,12 +67,14 @@
     </div>
     <div class="step-2 form hide">
       <div>
-        <label>Github repository path (owner/repository)</label>
+        <p class="section-description">Github repository path (owner/repository)</p>
         <input type="text" class="repo-path" placeholder="maddevsio/heimdall">
       </div>
       <button class="button button-primary get-badge">Markdown code</button>
     </div>
     <div class="step-3 markdown hide">
+      <h3 class="section-heading">Place this code to README.md</h3>
+      <textarea style="width:450px"></textarea>
     </div>  
   </div>
   
@@ -90,7 +92,7 @@
       });
       getBadge.on('click', function(){
         var path = repoPath.val();
-        markdown.html(`[![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/${path})](https://heimdall.maddevs.io/report/github/${path})`)
+        markdown.find('textarea').html(`[![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/${path})](https://heimdall.maddevs.io/report/github/${path})`)
         markdown.show();
         $('.step-2').hide();
         $('.step-3').show();
