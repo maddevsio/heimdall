@@ -3,5 +3,8 @@
 config/
 scanner/*.sol
 firebase-*.json
+firebase*.json
 .env
 .vscode/
+.idea/*
+.idea

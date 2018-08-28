@@ -1,0 +1,31 @@
+{% block content %}
+    <style>
+        .text-center {
+            text-align: center;
+        }
+        canvas {
+            height: 100vh;
+            width: 100vw;
+            display: block;
+          }
+        .container {
+            background: rgba(255, 255, 255, 0.88);
+            overflow: overlay;
+            overflow-y: scroll;
+            height: -webkit-fill-available;
+            padding: 20px 10px;
+        }
+    </style>
+    <div class="container text-section">
+        <div class="row">
+            <div class="six columns">
+                <h2><a href="/">Heimdall Report</a></h2>
+            </div>
+            <div class="six columns">
+                <p class="text-right"><small>{{ message }}</small>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+{% endblock %}
