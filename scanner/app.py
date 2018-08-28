@@ -28,18 +28,23 @@ firebase_admin.initialize_app(cred, {
 root = db.reference()
 
 
-async def error_middleware(app, handler):
-    async def middleware_handler(request):
-        try:
-            response = await handler(request)
-            if response.status == 404:
-                return response_to_error(response.message)
+@web.middleware
+async def error_middleware(request, handler):
+    try:
+        response = await handler(request)
+        if response.status != 404:
             return response
-        except web.HTTPException as ex:
-            if ex.status == 404:
-                return response_to_error(ex.reason)
+        message = response.message
+    except web.HTTPException as ex:
+        if ex.status != 404:
             raise
-    return middleware_handler
+        message = ex.reason
+    context = {'error': message}
+    response = aiohttp_jinja2.render_template(
+        'error.jinja2', request, context
+    )
+    response.headers['Content-Language'] = 'ru'
+    return response
 
 
 async def get_report_status(issues):
@@ -136,11 +141,6 @@ async def report_view(request):
         'owner': owner,
         'repo': repo
     }
-
-
-@aiohttp_jinja2.template('error.jinja2')
-async def response_to_error(message):
-    return {'error': message}
 
 
 async def report_view_json(request):

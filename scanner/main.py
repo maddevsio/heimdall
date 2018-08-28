@@ -24,7 +24,7 @@ def setup_routes(app):
 
 
 def create_app():
-    app = web.Application(middlewares=[error_middleware])
+    app = web.Application(middlewares=[error_middleware, ])
     aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(TEMPLATE_DIR))
     setup_routes(app)
     app.on_startup.append(start_background_tasks)
