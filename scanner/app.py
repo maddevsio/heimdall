@@ -5,6 +5,7 @@ import json
 import logging
 import operator
 import os
+import json
 
 import aiohttp_jinja2
 import firebase_admin
@@ -27,6 +28,25 @@ firebase_admin.initialize_app(cred, {
 root = db.reference()
 
 
+@web.middleware
+async def error_middleware(request, handler):
+    try:
+        response = await handler(request)
+        if response.status != 404:
+            return response
+        message = response.message
+    except web.HTTPException as ex:
+        if ex.status != 404:
+            raise
+        message = ex.reason
+    context = {'error': message}
+    response = aiohttp_jinja2.render_template(
+        'error.jinja2', request, context
+    )
+    response.headers['Content-Language'] = 'ru'
+    return response
+
+
 async def get_report_status(issues):
     if not issues:
         return 'passed'
@@ -34,7 +54,7 @@ async def get_report_status(issues):
     data = [issue['type'] for issue in issues]
     if 'Warning' in data:
         return 'Warning'
-    
+
     if 'Informational' in data:
         return 'Informational'
 
@@ -81,7 +101,7 @@ async def report_get_or_create(owner, repo):
     logging.info(f'[github/{owner}/{repo}] Firebase Report Cache: {report}')
     if not report:
         logging.info(f'[github/{owner}/{repo}] Start report processing')
-        pub = await aioredis.create_redis(('localhost', 6379))                                     
+        pub = await aioredis.create_redis(('localhost', 6379))
         res = await pub.publish_json('chan:1', {'owner': owner, 'repo': repo})
         pub.close()
         report = db.reference(f'{owner}/{repo}').get()
@@ -121,6 +141,7 @@ async def report_view(request):
         'owner': owner,
         'repo': repo
     }
+
 
 async def report_view_json(request):
     owner = request.match_info['owner']
