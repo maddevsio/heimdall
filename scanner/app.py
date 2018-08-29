@@ -136,7 +136,7 @@ async def report_view(request):
     logging.info(f'[github/{owner}/{repo}] Request report')
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo}')
     if response.status_code == 404:
-        return {'message': 'Github repository does not exist', }
+        return {'error': 'Github repository does not exist', }
     await report_get_or_create(owner, repo)
     report = db.reference(f'{owner}/{repo}').get()
     logging.info(f'[github/{owner}/{repo}] Report sended')
@@ -145,7 +145,7 @@ async def report_view(request):
         'mythril': report,
         'owner': owner,
         'repo': repo,
-        'message': None
+        'error': None
     }
 
 

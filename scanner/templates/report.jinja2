@@ -36,7 +36,7 @@
         <h4><a href="https://github.com/{{ owner }}/{{ repo }}" target="_blank"><i
                 class="fab fa-github"></i> {{ owner }}/{{ repo }}</a></h4>
         <hr>
-        {% if message == None %}
+        {% if not error %}
             {% if mythril.report %}
                 {% for key, item in mythril.report.items() %}
                     <h3>{{ item.file }} {% if not item.data.issues %}<i class="fa fa-check"></i>{% endif %}</h3>
@@ -84,7 +84,7 @@
                 <h1 class="text-center"><i class="fas fa-spinner fa-pulse"></i> Processing report...</h1>
             {% endif %}
         {% else %}
-            <h1 class="text-center">{{ message }}</h1>
+            <h1 class="text-center">{{ error }}</h1>
         {% endif %}
 
 
