@@ -9,6 +9,7 @@ import json
 
 import aiohttp_jinja2
 import firebase_admin
+import requests
 from aiohttp import web
 from firebase_admin import credentials, db
 
@@ -133,13 +134,18 @@ async def report_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
     logging.info(f'[github/{owner}/{repo}] Request report')
+    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}')
+    if response.status_code == 404:
+        return {'error': 'Github repository does not exist', }
     await report_get_or_create(owner, repo)
     report = db.reference(f'{owner}/{repo}').get()
     logging.info(f'[github/{owner}/{repo}] Report sended')
+
     return {
         'mythril': report,
         'owner': owner,
-        'repo': repo
+        'repo': repo,
+        'error': None
     }
 
 

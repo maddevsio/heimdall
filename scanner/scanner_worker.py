@@ -15,7 +15,7 @@ async def scan_github():
             for repo, _ in node.items():
                 logging.info(f'[github/{owner}/{repo}] Processing contract')
                 report = await generate_report(owner, repo)
-                logging.info(f'[github/{owner}/{repo}] Rerport ready: ', report)
+                logging.info(f'[github/{owner}/{repo}] Report ready: ', report)
         await asyncio.sleep(1)
 
 

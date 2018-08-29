@@ -9,6 +9,7 @@ BLACK_LIST = [
     'Migrations.sol',
 ]
 
+
 async def github_fetch_smart_contracts(owner, repo):
     repository_files = await repository_tree(owner, repo)
     smart_contracts = []
