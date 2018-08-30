@@ -1,5 +1,5 @@
 import unittest
-from scanner.generate_byte_code import *
+from generate_byte_code import *
 
 
 class TestMethodsOfGenerate(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestMethodsOfGenerate(unittest.TestCase):
 
     def test_get_contract_names(self):
         file_to_assert = open('assert_without_name_test.txt', mode='r').read()
-        convert = get_contract_names('tests/neureal_token_test.sol')
+        convert = get_contracts('tests/neureal_token_test.sol')
         self.assertEqual(convert, file_to_assert)
 
 
