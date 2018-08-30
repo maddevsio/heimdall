@@ -9,7 +9,6 @@ def extract_bytecode(compiled, contract_name):
     :compiled - content from smart contract file
     :contract_name - list / empty of contract names
     """
-
     return [{
         contract: {
             'bytecode': compiled[contract]['bin'],
@@ -35,9 +34,9 @@ def main(solidity_file, output, contract):
     compiled = compiled_smart_contract(solidity_file)
 
     if not contract:
-        contract = get_contracts(compiled)
-    
-    contract = list(contract)
+        contract = list(get_contracts(compiled))
+    else:
+        contract = ['<stdin>:' + contract, ]
 
     result = extract_bytecode(compiled, contract)
     return resolve_output(result, output)
