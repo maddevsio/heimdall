@@ -7,10 +7,10 @@ METHOD  =  'eth_getCode'
 
 
 def get_bytecode(address, network):
-    NETWORK = network + '/'
-    endpoint = URL + NETWORK + METHOD 
-    payload = {'params': json.dumps(["{}".format(address), "latest"])}
-
+    NETWORK = f'{network}/'
+    endpoint = f"{URL}{NETWORK}{METHOD}" 
+    payload = {'params': json.dumps([address, "latest"])}
+    
     response = requests.get(endpoint, params=payload)
     if 400 <= response.status_code < 404:
         return print("No data was found")
