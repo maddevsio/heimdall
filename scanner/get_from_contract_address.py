@@ -7,8 +7,7 @@ METHOD  =  'eth_getCode'
 
 
 def get_bytecode(address, network):
-    NETWORK = f'{network}/'
-    endpoint = f"{URL}{NETWORK}{METHOD}" 
+    endpoint = f"{URL}{network}/{METHOD}"
     payload = {'params': json.dumps([address, "latest"])}
     
     response = requests.get(endpoint, params=payload)
