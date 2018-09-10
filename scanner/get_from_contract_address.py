@@ -11,7 +11,7 @@ def get_bytecode(address, network):
     payload = {'params': json.dumps([address, "latest"])}
     
     response = requests.get(endpoint, params=payload)
-    if 400 <= response.status_code < 404:
+    if response.status_code == 404:
         return print("No data was found")
 
     return response.json()['result']
