@@ -2,6 +2,8 @@
 [![CircleCI](https://circleci.com/gh/maddevsio/heimdall/tree/master.svg?style=svg)](https://circleci.com/gh/maddevsio/heimdall/tree/master)  
 Tool for analyzing smart contracts using mythril
 
+![Heimdall ](http://i.imgur.com/IGicAt2.png)
+
 Demo:  
 [![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/maddevsio/heimdall)](https://heimdall.maddevs.io/report/github/maddevsio/heimdall)   
 
