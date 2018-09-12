@@ -11,6 +11,7 @@ async def background_report(app):
             data = json.loads(msg)
             owner = data.get('owner')
             repo = data.get('repo')
+
             instance = root.child(f'{owner}/{repo}')
             if not instance.get() or not instance.get('processing'):
                 root.child(f'{owner}/{repo}').update({'processing' : True})
