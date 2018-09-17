@@ -68,28 +68,54 @@ async def get_report_status_full(result):
         return 'minor'
     return 'passed'
 
+async def mythril_firebase_logic(owner, repo, smart_contract, contract_hash):
+    repository_path = f'{owner}/{repo}'
+    try:
+        report = json.loads(mythril_scanner(smart_contract))
+
+        current_report = root.child(f'{repository_path}/report')
+        item = {
+            'key': contract_hash,
+            'file': smart_contract,
+            'data': report,
+            'status': await get_report_status(report.get('issues')),
+        }
+        name_for_firebase = smart_contract.replace('.', '-')
+        node = current_report.child(name_for_firebase)
+
+        node.set(item)
+        logging.info(f'[github/{owner}/{repo}] Report item: {item}')
+    except Exception as e:
+        logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
+        pass
 
 async def generate_report(owner, repo):
     smart_contracts = await github_fetch_smart_contracts(owner, repo)
+
     repository_path = f'{owner}/{repo}'
     logging.info(f'[github/{repository_path}] Fetch smart contracts: {smart_contracts}')
+    
     root.child(repository_path).update({'processing': True})
-    for smart_contract in smart_contracts:
+    for contract in smart_contracts:
+        smart_contract = contract['name']
+        contract_hash = contract['sha']
+        replace_name = smart_contract.replace('.', '-')
+
         logging.info(f'[github/{owner}/{repo}] Processing contract: {smart_contract}')
-        try:
-            report = json.loads(mythril_scanner(smart_contract))
-            current_report = root.child(f'{repository_path}/report')
-            item = {
-                'file': smart_contract,
-                'data': report,
-                'status': await get_report_status(report.get('issues')),
-            }
-            node = current_report.child(smart_contract.replace('.', '-'))
-            node.set(item)
-            logging.info(f'[github/{owner}/{repo}] Report item: {item}')
-        except Exception as e:
-            logging.error(f'[github/{owner}/{repo}] Skipped exception: {e}')
-            pass
+
+        CONTRACT = f'{owner}/{repo}/report/{replace_name}'
+        FIREBASE_CONTRACT = root.child(f'{owner}/{repo}/report/{replace_name}').get('key')
+
+        if not db.reference(CONTRACT).get():
+            await mythril_firebase_logic(owner, repo, smart_contract, contract_hash)
+        else:
+            if FIREBASE_CONTRACT[0]['key'] != contract_hash:
+                db.reference(f'{owner}/{repo}/report').delete()
+                await mythril_firebase_logic(owner, repo, smart_contract, contract_hash)
+            else:
+                logging.info(f'[github/{owner}/{repo}] The contract was not changed: {smart_contract}')
+                pass
+
     report = root.child(repository_path).get()
     status = await get_report_status_full(report)
     logging.info(f'[github/{owner}/{repo}] status: {status}')
@@ -100,7 +126,7 @@ async def generate_report(owner, repo):
 async def report_get_or_create(owner, repo):
     report = db.reference(f'{owner}/{repo}').get()
     logging.info(f'[github/{owner}/{repo}] Firebase Report Cache: {report}')
-    if not report:
+    if not report:  
         logging.info(f'[github/{owner}/{repo}] Start report processing')
         pub = await aioredis.create_redis(('localhost', 6379))
         res = await pub.publish_json('chan:1', {'owner': owner, 'repo': repo})
@@ -133,10 +159,13 @@ async def homepage(request):
 async def report_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
+
     logging.info(f'[github/{owner}/{repo}] Request report')
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo}')
+
     if response.status_code == 404:
         return {'error': 'Github repository does not exist', }
+
     await report_get_or_create(owner, repo)
     report = db.reference(f'{owner}/{repo}').get()
     logging.info(f'[github/{owner}/{repo}] Report sended')
