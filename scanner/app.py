@@ -16,6 +16,10 @@ from firebase_admin import credentials, db
 from analyzer.mythrilapp import mythril_scanner
 from badge import badge_generator
 from sources.github import github_fetch_smart_contracts
+from aiohttp_basicauth import BasicAuthMiddleware
+
+
+auth = BasicAuthMiddleware(username=os.environ.get('HEIMDALL_USER'), password=os.environ.get('HEIMDALL_PASSWORD'), force=False)
 
 
 FIREBASE_CERTIFICATE = os.environ.get('FIREBASE_CERTIFICATE')
@@ -149,7 +153,7 @@ async def badge_view(request):
         headers={'Cache-Control': 'no-cache', 'Expires': '0'}
     )
 
-
+@auth.required
 @aiohttp_jinja2.template('homepage.jinja2')
 async def homepage(request):
     return {}
