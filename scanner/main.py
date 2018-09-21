@@ -4,7 +4,7 @@ import aiohttp_jinja2
 import jinja2
 from aiohttp import web
 
-from app import badge_view, homepage, report_view, report_view_json, error_middleware
+from app import badge_view, homepage, report_view, report_view_json, error_middleware, worker_view
 from background_worker import start_background_tasks, cleanup_background_tasks
 
 
@@ -18,6 +18,7 @@ log.setLevel(logging.INFO)
 
 def setup_routes(app):
     app.router.add_get('/', homepage)
+    app.router.add_get('/online', worker_view)
     app.router.add_get('/badge/{source}/{owner}/{repo}', badge_view)
     app.router.add_get('/report/{source}/{owner}/{repo}/json', report_view_json)
     app.router.add_get('/report/{source}/{owner}/{repo}', report_view)

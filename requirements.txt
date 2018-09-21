@@ -3,6 +3,8 @@ aiohttp==3.3.2
 asn1crypto==0.24.0
 async-timeout==3.0.0
 attrdict==2.0.0
+aiohttp-basicauth==0.1.0
+aiohttp-basicauth-middleware==1.0.2
 attrs==18.1.0
 backcall==0.1.0
 cchardet==2.1.1

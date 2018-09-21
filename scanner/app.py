@@ -138,7 +138,6 @@ async def report_get_or_create(owner, repo):
         report = db.reference(f'{owner}/{repo}').get()
     return report
 
-
 async def badge_view(request):
     owner = request.match_info['owner']
     repo = request.match_info['repo']
@@ -153,7 +152,6 @@ async def badge_view(request):
         headers={'Cache-Control': 'no-cache', 'Expires': '0'}
     )
 
-@auth.required
 @aiohttp_jinja2.template('homepage.jinja2')
 async def homepage(request):
     return {}
@@ -191,3 +189,10 @@ async def report_view_json(request):
         'owner': owner,
         'repo': repo
     })
+
+@auth.required
+@aiohttp_jinja2.template('worker_view.jinja2')
+async def worker_view(request):
+    return {
+        'status': 'running'
+    }
