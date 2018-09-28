@@ -1,5 +1,6 @@
 *.pyc
 *__pycache__/*
+*.save
 config/
 scanner/*.sol
 firebase-*.json
