@@ -106,14 +106,19 @@
 <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
 <script>
     $(document).ready(function (e) {
-
+        var apiKey = '{{apiKey}}'
+        var authDomain = '{{authDomain}}'
+        var databaseURL ='{{databaseURL}}'
+        var projectId ='{{projectId}}'
+        var storageBucket = '{{storageBucket}}'
+        var messagingSenderId = '{{messagingSenderId}}'
         var config = {
-            apiKey: "",
-            authDomain: "",
-            databaseURL: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
+            apiKey: apiKey,
+            authDomain: authDomain,
+            databaseURL: databaseURL,
+            projectId: projectId,
+            storageBucket: storageBucket,
+            messagingSenderId: messagingSenderId,
         };
 
         firebase.initializeApp(config);
