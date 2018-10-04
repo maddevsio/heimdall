@@ -1,7 +1,11 @@
 *.pyc
 *__pycache__/*
+*.save
 config/
 scanner/*.sol
 firebase-*.json
+firebase*.json
 .env
 .vscode/
+.idea/*
+.idea

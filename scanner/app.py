@@ -190,7 +190,7 @@ async def report_view_json(request):
 @aiohttp_jinja2.template('worker_view.jinja2')
 async def worker_view(request):
     return {
-        'apiKey': os.environ.get('apiKey', '123'),
+        'apiKey': os.environ.get('apiKey'),
         'authDomain': os.environ.get('authDomain'),
         'databaseURL': os.environ.get('databaseURL'),
         'projectId': os.environ.get('projectId'),

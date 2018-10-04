@@ -1,0 +1,182 @@
+{% extends '_layout.jinja2' %}
+{% block content %}
+<style>
+    .hide {
+        display: none;
+    }
+
+    canvas {
+        display: block;
+        vertical-align: bottom;
+    }
+
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #271c2c
+    }
+
+    .container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .text {
+        text-align: center;
+        color: #fff;
+        max-width: 90%;
+        padding: 2em 3em;
+        background: rgba(0, 0, 0, 0.4);
+        text-shadow: 0px 0px 2px #131415;
+        margin: auto;
+    }
+
+    .badge-generator,
+    .get-badge {
+        margin: auto
+    }
+
+    .footer-copyright {
+        width: 100%;
+        text-align: center;
+        color: white;
+        margin-top: auto;
+        line-height: 5px;
+        font-size: 12px;
+    }
+
+    .footer-copyright a {
+        color: #1EAEDB;
+    }
+
+    .firebase-view {
+        width: 0;
+    }
+</style>
+<script>
+    window.onload = function () {
+        Particles.init({
+            selector: '#particles-js',
+            connectParticles: true,
+            maxParticles: 150,
+            color: ['#DA0463', '#404B69', '#DBEDF3'],
+            responsive: [{
+                breakpoint: 300,
+                options: {
+                    color: '#00C9B1',
+                    maxParticles: 60,
+                    connectParticles: true
+                }
+            },
+            {
+                breakpoint: 1000,
+                options: {
+                    color: ['#DA0463', '#404B69', '#DBEDF3'],
+                    maxParticles: 100,
+                    connectParticles: true
+                }
+            }]
+        });
+    };
+</script>
+<div class="container">
+    <table class="table table-bordered table-dark" style="color:#fff">
+        <thead>
+            <tr>
+                <th scope="firebase-view">Owner</th>
+                <th scope="firebase-view">Repo</th>
+                <th scope="firebase-view">Processing</th>
+                <th scope="firebase-view">Badge</th>
+            </tr>
+        </thead>
+        <tbody id="previousItems">
+        </tbody>
+    </table>
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+        <p><a href="https://maddevs.io/"> maddevs.io</a></p>
+        <p><a href="https://github.com/maddevsio/heimdall/">github.com/maddevsio/heimdall</a></p>
+        <p>&copy;
+            <script>  document.write(new Date().getFullYear()); </script>, Company</p>
+    </div>
+    <!-- Copyright -->
+</div>
+<script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+<script>
+    $(document).ready(function (e) {
+        var apiKey = '{{apiKey}}'
+        var authDomain = '{{authDomain}}'
+        var databaseURL ='{{databaseURL}}'
+        var projectId ='{{projectId}}'
+        var storageBucket = '{{storageBucket}}'
+        var messagingSenderId = '{{messagingSenderId}}'
+        var config = {
+            apiKey: apiKey,
+            authDomain: authDomain,
+            databaseURL: databaseURL,
+            projectId: projectId,
+            storageBucket: storageBucket,
+            messagingSenderId: messagingSenderId,
+        };
+
+        firebase.initializeApp(config);
+
+        const ref = firebase.database().ref();
+
+        ref.on('value', function (items) {
+            
+            var owners = Object.keys(items.val());
+
+            $('#previousItems').html('');
+            items.forEach(function (firebaseItemReference) {
+                var item = firebaseItemReference.val();
+                var repositories = Object.keys(item);
+                
+                for (var i = 0; i < repositories.length; i += 1) {
+                    var owner = firebaseItemReference.key;
+                    var repo = repositories[i]
+                    var repoObject = item[repo];
+
+                    $('#previousItems').append(` 
+                        <tr>
+                            <td class="owner">`+ owner + `</td>
+                            <td class="repo">`+ repo + `</td>
+                            <td class="processing">`+ repoObject.processing + `</td>
+                            <td class="badge">`+ repoObject.badge + `</td>
+                        </tr>`);
+                }
+
+            });
+        });
+
+    });
+
+    $(function () {
+        var btn = $('.badge-generator');
+        var form = $('.form');
+        var getBadge = $('.get-badge');
+        var repoPath = $('.repo-path');
+        var markdown = $('.markdown');
+        btn.on('click', function (e) {
+            form.show();
+            btn.hide();
+            $('.step-1').hide();
+        });
+        getBadge.on('click', function () {
+            var path = repoPath.val();
+            if (path === "") {
+                alert("Please input repository ");
+            }
+            else {
+                markdown.find('textarea').html(`[![Heimdall
+    Scanner](https://heimdall.maddevs.io/badge/github/${path})](https://heimdall.maddevs.io/report/github/${path})`)
+                markdown.show();
+                $('.step-2').hide();
+                $('.step-3').show();
+            }
+        })
+    });
+</script>
+{% endblock %}

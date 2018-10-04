@@ -9,6 +9,7 @@ BLACK_LIST = [
     'Migrations.sol',
 ]
 
+
 async def github_fetch_smart_contracts(owner, repo):
     repository_files = await repository_tree(owner, repo)
     smart_contracts = []
@@ -19,7 +20,10 @@ async def github_fetch_smart_contracts(owner, repo):
 
         if contract.endswith('.sol') and contract not in BLACK_LIST:
             smart_contracts.append(item)
-    return [await write_contracts(owner, repo, contract['path']) for contract in smart_contracts]
+    return [{ 
+        'name': await write_contracts(owner, repo, contract['path']),
+        'sha': contract['sha']
+        } for contract in smart_contracts]
 
 
 async def repository_tree(owner, repository):
