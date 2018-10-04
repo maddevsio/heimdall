@@ -19,8 +19,6 @@ from sources.github import github_fetch_smart_contracts
 from aiohttp_basicauth import BasicAuthMiddleware
 
 
-auth = BasicAuthMiddleware(username=os.environ.get('HEIMDALL_USER'), password=os.environ.get('HEIMDALL_PASSWORD'), force=False)
-
 
 FIREBASE_CERTIFICATE = os.environ.get('FIREBASE_CERTIFICATE')
 FIREBASE_DATABASE = os.environ.get('FIREBASE_DATABASE')
@@ -190,7 +188,6 @@ async def report_view_json(request):
         'repo': repo
     })
 
-@auth.required
 @aiohttp_jinja2.template('worker_view.jinja2')
 async def worker_view(request):
     return {
