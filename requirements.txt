@@ -58,7 +58,6 @@ Pygments==2.2.0
 pysha3==1.0.2
 PyYAML==3.13
 repoze.lru==0.7
-requests==2.19.1
 rlp==1.0.1
 scrypt==0.8.6
 semantic-version==2.6.0
@@ -78,4 +77,5 @@ anybadge==1.1.1
 aiohttp-jinja2==1.0.0
 aioredis==1.1.0
 pycryptodome==3.6.6
-click==6.7requests==2.20.1
+click==6.7
+requests==2.20.1
