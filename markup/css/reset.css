@@ -1,0 +1,268 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  outline: none;
+}
+
+img {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  display: inline-block;
+  vertical-align: top;
+  border: none;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+@font-face {
+  font-family: "sfui";
+  src: url("../fonts/sfui/SFUIDisplay-Regular.otf");
+}
+
+@font-face {
+  font-family: "sfui";
+  src: url("../fonts/sfui/SFUIDisplay-Medium.otf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "sfui";
+  src: url("../fonts/sfui/SFUIDisplay-Bold.otf");
+  font-weight: bold;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Fira+Mono");
+
+body {
+  font-family: "sfui", sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #292929;
+}
+
+.page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__main {
+  flex-grow: 1;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 0 10px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.button {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 12px 20px;
+  background-color: #000;
+  color: #fff;
+}
+
+.button_block {
+  display: block;
+  width: 100%;
+}
+
+.button_main {
+  padding: 11px 21px;
+  background-color: #6732ff;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.button_main:hover {
+  background-color: #7E52FF;
+}
+
+.button_main:active {
+  background-color: #5228CC;
+}
+
+.button_alt {
+  padding: 11px 21px;
+  background-color: #fff;
+  color: #292929;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.button_alt:hover {
+  background-color: #F6F8FA;
+}
+
+.button_alt:active {
+  background-color: #F2EEFF;
+}
+
+.button__text, .button__icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button__text + .button__icon, .button__icon + .button__text {
+  margin-left: 8px;
+}
+
+.field {
+  padding: 11px 19px;
+  margin: 0;
+  display: block;
+  width: 100%;
+  background: none;
+  background-color: #fff;
+  border: 1px solid #000;
+  box-shadow: none;
+  color: #000;
+  font-size: inherit;
+}
+
+.field::-webkit-input-placeholder {
+  opacity: 1;
+  color: inherit;
+}
+
+.field::-moz-placeholder {
+  opacity: 1;
+  color: inherit;
+}
+
+.field:-ms-input-placeholder {
+  opacity: 1;
+  color: inherit;
+}
+
+.field_main {
+  padding: 9px 9px 10px;
+  color: #292929;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.field_main::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+.field_main::-moz-placeholder {
+  color: #ccc;
+}
+
+.field_main:-ms-input-placeholder {
+  color: #ccc;
+}
+
+.field_main:hover {
+  border-color: #B398FF;
+}
+
+.field_main:active {
+  border-color: #BBBBBB;
+}
+
+.code-card_main .code-card__title {
+  font-size: 16px;
+}
+
+.code-card__title {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.code-card__code {
+  border-radius: 3px;
+  padding: 25px 17px;
+  font-family: "Fira Mono", sans-serif;
+  font-weight: normal;
+  display: block;
+  background-color: #edf2f6;
+  font-size: 16px;
+  color: #2f1010;
+  border-left: 4px solid rgba(0, 0, 0, 0.03);
+  letter-spacing: 0.027em;
+  line-height: 1.5;
+  transition: border-color 200ms ease-in-out 0ms;
+  word-break: break-all;
+}
+
+.code-card__content {
+  position: relative;
+  cursor: pointer;
+}
+
+.code-card__content:hover .code-card__copy {
+  opacity: 1;
+}
+
+.code-card__content:hover .code-card__code {
+  border-left-color: #6732ff;
+}
+
+.code-card__copy {
+  margin-top: 10px;
+  display: inline-block;
+  color: #6732ff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: opacity 200ms ease-in-out 0ms;
+  opacity: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.code-card__copy::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -2px;
+  margin-right: 8px;
+  height: 14px;
+  width: 14px;
+  background: transparent url("../img/copy-icon-purpule.svg") 0 0 no-repeat;
+  background-size: 14px 14px;
+}
+
+.code-card__marked {
+  color: #6732ff;
+}
+
+.code-card__label {
+  margin: 16px 0;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 767px) {
+  .code-card__title {
+    font-size: 18px;
+    padding-left: 40px;
+  }
+
+}
