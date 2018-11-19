@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="8px" viewBox="0 0 1440 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>line5</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Heimdall_1440&amp;&lt;" transform="translate(0.000000, -819.000000)" fill="#6732FF" fill-rule="nonzero">
+            <g id="lines" transform="translate(720.000000, 765.000000) scale(-1, -1) translate(-720.000000, -765.000000) translate(-55.000000, 703.000000)">
+                <path d="M218,0 L778,0 L778,8 L218,8 L218,0 Z M122,0 L202,0 L202,8 L122,8 L122,0 Z M98,0 L106,0 L106,8 L98,8 L98,0 Z M50,0 L82,0 L82,8 L50,8 L50,0 Z M700,0 L700,8 L716,8 L716,0 L700,0 Z M900,0 L1500,0 L1500,8 L900,8 L900,0 Z M804,0 L884,0 L884,8 L804,8 L804,0 Z M780,0 L788,0 L788,8 L780,8 L780,0 Z M732,0 L764,0 L764,8 L732,8 L732,0 Z M1383,0 L1383,8 L1399,8 L1399,0 L1383,0 Z M1414,0 L1414,8 L1430,8 L1430,0 L1414,0 Z" id="line5"></path>
+            </g>
+        </g>
+    </g>
+</svg>
