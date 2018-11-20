@@ -1,125 +1,363 @@
-{% extends '_layout.jinja2' %} 
-{% block content %}
-<style>
-  .hide {
-    display: none;
-  }
-  canvas {
-    display: block;
-    vertical-align: bottom;
-  }
-  #particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #271c2c
-  }
-  .container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  .text {
-    text-align: center;
-    color: #fff;
-    max-width: 90%;
-    padding: 2em 3em;
-    background: rgba(0, 0, 0, 0.4);
-    text-shadow: 0px 0px 2px #131415;
-    margin: auto;
-  }
-  .badge-generator, .get-badge{
-    margin: auto
-  }
-  .footer-copyright{
-    width: 100%;
-    text-align: center;
-    color: white;
-    margin-top: auto;
-    line-height: 5px;
-    font-size: 12px;
-  }
-  .footer-copyright a {
-    color: #1EAEDB;
-  }
-</style>
-<script>
-  window.onload = function () {
-    Particles.init({
-      selector: '#particles-js',
-      connectParticles: true,
-      maxParticles: 150,
-      color: ['#DA0463', '#404B69', '#DBEDF3'],
-      responsive: [{
-        breakpoint: 300,
-        options: {
-          color: '#00C9B1',
-          maxParticles: 60,
-          connectParticles: true
-        }
-      },
-      {
-        breakpoint: 1000,
-        options: {
-          color: ['#DA0463', '#404B69', '#DBEDF3'],
-          maxParticles: 100,
-          connectParticles: true
-        }
-      }]
-    });
-  };
-</script>
-<div class="container">
-  <div class="section text">
-    <div class="step-1">
-      <h3 class="section-heading">Heimdall</h3>
-      <p class="section-description">Ethereum Smart Contracts Security Monitoring</p>
-      <button class="button button-primary badge-generator">Get the badge</button>
-    </div>
-    <div class="step-2 form hide">
-      <div>
-        <p class="section-description">Github repository path (owner/repository)</p>
-        <input type="text" class="repo-path" placeholder="maddevsio/heimdall">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Heimdall</title>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/css/reset.css">
+    <link rel="stylesheet" href="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/css/main.css">
+  </head>
+  <body>
+    <div class="page" id="app">
+      {% include 'header.jinja2' %}
+      <div class="page__main">
+        <div class="layout">
+          <section class="layout__section">
+            <div class="intro">
+              <div class="intro__wrapper wrapper">
+                <h1 class="intro__text">
+                  Ethereum Smart Contracts Security Monitoring
+                </h1>
+                <div class="intro__form">
+                  <div class="git-form js-git-form-1">
+                    <div class="git-form__form is-visible js-git-form-top">
+                      <form action="#" method="POST">
+                        <label class="git-form__label">Github repository path (owner/repository)</label>
+                        <div class="git-form__main">
+                          <div class="git-form__input">
+                            <input
+                              type="text"
+                              name="git_path"
+                              class="field field_main js-git-input"
+                              ref="git_path"
+                              placeholder="maddevsio/heimdall"
+                              autocomplete="off"
+                              required
+                            >
+                            <div class="git-form__message js-git-form-msg">Please enter the valid Git repository path</div>
+                          </div>
+                          <div class="git-form__button">
+                            <button type="submit" class="button button_main button_block">Get the badge</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="git-form__code js-git-form-bottom">
+                      <div class="code-card code-card_main">
+                        <div class="code-card__title">Place this code to README.md</div>
+                        <div class="code-card__content js-copy-code">
+                          <code class="code-card__code">
+                            [![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>)](https://heimdall.maddevs.io/report/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>)
+                          </code>
+                          <div class="code-card__copy">copy code</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="layout__section">
+            <div class="jumbo">
+              <div class="jumbo__bridge">
+                <div class="jumbo__line"></div>
+                <div class="jumbo__line"></div>
+                <div class="jumbo__line"></div>
+                <div class="jumbo__line"></div>
+                <div class="jumbo__line"></div>
+              </div>
+              <img class="jumbo__image" src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/browser@2x.png" alt="img">
+            </div>
+          </section>
+          <section class="layout__section">
+            <div class="advantages">
+              <div class="advantages__wrapper wrapper">
+                <h2 class="advantages__title">Why do you need Heimdall?</h2>
+                <ul class="advantages__list">
+                  <li class="advantages__item">
+                    <img src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/security.svg"
+                     alt="img" class="advantages__icon">
+                    <h3 class="advantages__caption">Security monitoring</h3>
+                    <p class="advantages__text">Keeps track of the <a href="https://mythril.ai/" class="advantages__link" target="_blank">Mythril</a> security reports and display their statuses as a badge in the repository. </p>
+                  </li>
+                  <li class="advantages__item">
+                    <img src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/code.svg" 
+                    alt="img" class="advantages__icon">
+                    <h3 class="advantages__caption">Registry of the repositories</h3>
+                    <p class="advantages__text">Allows you to add the repository into the <a href="https://github.com/maddevsio/heimdall" class="advantages__link" target="_blank">Heimdall</a> registry that it is monitoring and reporting about</p>
+                  </li>
+                  <li class="advantages__item">
+                    <img src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/docs.svg" 
+                    alt="img" class="advantages__icon">
+                    <h3 class="advantages__caption">Report display </h3>
+                    <p class="advantages__text">Heimdall does not generate reports but presents Mythril <a href="https://heimdall.maddevs.io/report/github/maddevsio/heimdall" class="advantages__link" target="_blank">report</a> in a nice and convenient way</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <section class="layout__section">
+            <div class="code">
+              <div class="code__wrapper wrapper">
+                <div class="code__inner">
+                  <div class="code__head">
+                    <div class="code-tabs js-code-tabs is-operations">
+                      <div class="code-tabs__top">
+                        <div class="code-tabs__left js-tab-operation" data-tab="operations">Operations</div>
+                        <div class="code-tabs__right js-tab-delivery" data-tab="delivery">Delivery</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="code__intro is-visible" data-block="operations">
+                    Follow next steps for getting Heimdall badge:
+                  </div>
+                  <div class="code__main is-visible" data-block="operations">
+                    <ol class="code__list">
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Badge URL</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              https://heimdall.maddevs.io/badge/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Report URL</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              https://heimdall.maddevs.io/report/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Markdown badge</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              [![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>)](https://heimdall.maddevs.io/report/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>)
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">HTML badge</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              &lt;a href="https://heimdall.maddevs.io/report/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>"&gt;
+                              <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="https://heimdall.maddevs.io/badge/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>"&gt;
+                              <br>
+                              &lt;/a&gt;
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                  <div class="code__main" data-block="delivery">
+                    <ol class="code__list">
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Install mythril via pypi <span class="code-card__marked">Mythril</span> require additional setup doc from mythril source code:</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              Whenever you disassemble or analyze binary code, Mythril will try to
+                              resolve function names using its local signature database. The database
+                              must be provided at ``~/.mythril/signatures.json``. You can start out
+                              with the `default file &lt;signatures.json&gt;`__ as follows:
+                              <br>
+                              ::
+                              <br>
+                              &nbsp;&nbsp;&nbsp;&nbsp;$ cd ~/.mythril
+                              <br>
+                              &nbsp;&nbsp;&nbsp;&nbsp;$ wget https://raw.githubusercontent.com/b-mueller/mythril/master/signatures.json
+                              <br>
+                              ::
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Install project dependencies:</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              $ pip install -r requirements.txt
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Go to project scanner dir</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              $ cd scanner
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Create github personal token:</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              <span class="code-card__marked">https://github.com/settings/tokens</span>
+                            </code>
+                            <div class="code-card__copy">copy link</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Setup firebase connection:</div>
+                          <div class="code-card__content js-copy-code">
+                            <div class="code-card__label">FIREBASE_CERTIFICATE</div>
+                            <code class="code-card__code">
+                              Take certificate from Project Settings -> Service account -> Generate new private key
+                              <br>
+                              Place this certificate inside project root.
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                          <div class="code-card__label">FIREBASE_DATABASE</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              Take certificate from Project Settings -> Service account -> Generate new private key
+                              <br>
+                              Place this certificate inside project root.
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="code__item">
+                        <div class="code-card">
+                          <div class="code-card__title">Run ginicorn:</div>
+                          <div class="code-card__content js-copy-code">
+                            <code class="code-card__code">
+                              $ gunicorn main:run --bind localhost:8000 --worker-class aiohttp.GunicornWebWorker -e GITHUB_TOKEN=&lt;token_here&gt; -e FIREBASE_CERTIFICATE=&lt;FIREBASE_CERTIFICATE_PATH&gt; -e FIREBASE_DATABASE=&lt;FIREBASE_DATABASE&gt; -t 200 --reload
+                            </code>
+                            <div class="code-card__copy">copy code</div>
+                          </div>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="layout__section">
+            <div class="monitor">
+              <div class="monitor__wrapper wrapper">
+                <div class="monitor__icon">
+                  <img src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/logo.svg"
+                   alt="HEIMDALL">
+                </div>
+                <h2 class="monitor__text">
+                  Monitor the code status
+                </h2>
+                <div class="monitor__form">
+                  <div class="git-form js-git-form-2">
+                    <div class="git-form__form is-visible js-git-form-top">
+                      <form action="#" method="POST">
+                        <label class="git-form__label">Github repository path (owner/repository)</label>
+                        <div class="git-form__main">
+                          <div class="git-form__input">
+                            <input
+                              type="text"
+                              name="git_path"
+                              class="field field_main js-git-input"
+                              ref="git_path"
+                              placeholder="maddevsio/heimdall"
+                              autocomplete="off"
+                              required
+                            >
+                            <div class="git-form__message js-git-form-msg">Please enter the valid Git repository path</div>
+                          </div>
+                          <div class="git-form__button">
+                            <button type="submit" class="button button_main button_block">Get the badge</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="git-form__code js-git-form-bottom">
+                      <div class="code-card code-card_main">
+                        <div class="code-card__title">Place this code to README.md</div>
+                        <div class="code-card__content js-copy-code">
+                          <code class="code-card__code">
+                            [![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>)](https://heimdall.maddevs.io/report/github/<span class="js-badge">&lt;owner&gt;&lt;repository&gt;</span>)
+                          </code>
+                          <div class="code-card__copy">copy code</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="layout__section">
+            <div class="fork">
+              <div class="fork__bridge">
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+                <div class="fork__line"></div>
+              </div>
+              <div class="fork__wrapper wrapper">
+                <div class="fork__icon">
+                  <img src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/bridge.svg" 
+                  alt="img">
+                </div>
+                <h2 class="fork__title">Free and reliable solution</h2>
+                <p class="fork__text">Heimdall is the open source Security Monitoring tool for Ethereum Smart Contracts</p>
+                <div class="fork__link">
+                  <a href="https://github.com/maddevsio/heimdall" class="button button_alt" target="_blank">
+                    <span class="button__icon">
+                      <img src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/img/git.svg" 
+                        alt="img">
+                    </span>
+                    <span class="button__text">
+                      Fork me on Github
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-      <button class="button button-primary get-badge">Markdown code</button>
+      {% include 'footer.jinja2' %}
     </div>
-    <div class="step-3 markdown hide">
-      <h3 class="section-heading">Place this code to README.md</h3>
-      <textarea style="width:450px"></textarea>
-    </div>
-  </div>
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">
-    <p><a href="https://maddevs.io/"> maddevs.io</a></p>
-    <p><a href="https://github.com/maddevsio/heimdall/">github.com/maddevsio/heimdall</a></p>
-    <p>&copy; <script>  document.write(new Date().getFullYear()); </script>, Company</p>
-  </div>
-  <!-- Copyright -->
-</div>
-<script>
-  $(function () {
-    var btn = $('.badge-generator');
-    var form = $('.form');
-    var getBadge = $('.get-badge');
-    var repoPath = $('.repo-path');
-    var markdown = $('.markdown');
-    btn.on('click', function (e) {
-      form.show();
-      btn.hide();
-      $('.step-1').hide();
-    });
-    getBadge.on('click', function () {
-      var path = repoPath.val();
-      if (path === ""){
-        alert("Please input repository ");
-      }
-      else{
-      markdown.find('textarea').html(`[![Heimdall Scanner](https://heimdall.maddevs.io/badge/github/${path})](https://heimdall.maddevs.io/report/github/${path})`)
-      markdown.show();
-      $('.step-2').hide();
-      $('.step-3').show();
-      }
-    })
-  });
-</script> 
-{% endblock %}
+    <script src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/vendor/clipboard/clipboard.min.js"></script>
+    <script src="https://rawcdn.githack.com/maddevsio/heimdall/dfd924e7773a67c3f3b70e2b1b99d05251017e1c/markup/js/main.js"></script>
+  </body>
+</html>
