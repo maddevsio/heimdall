@@ -1016,6 +1016,16 @@
   margin-left: 108px;
 }
 
+.isa_warning{
+  color: #D8000C;
+  background-color: #FFD2D2;
+}
+.isa_warning i {
+  margin:10px 10px;
+  font-size:2em;
+  vertical-align:middle;
+}
+
 .icon-check {
   display: inline-block;
   vertical-align: middle;
