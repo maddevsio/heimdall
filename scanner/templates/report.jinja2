@@ -23,60 +23,59 @@
                   </div>
                 </div>
                 <ul class="report__list">
-                  <li class="report__item">
-                  {% if not error %} 
+                 {% if not error %}
                     {% if mythril.report %}
                       {% for key, item in mythril.report.items() %}
-                      {% if item.data.issues %}
-                        <div class="report-item">
-                          <h2 class="report-item__title">{{ item.file }}</h2>
-                        {% for issue in item.data.issues %}
-                          <div class="report-item__section">
-                            <div class="report-item__head">
-                              <div class="report-item__description">Contract {{ issue.contract }} Issue: {{ issue.title }}</div>
+                         {% if item.data.issues %}
+                             <li class="report__item">
+                                <div class="report-item">
+                                  <h2 class="report-item__title">{{ item.file }}</h2>
+                                {% for issue in item.data.issues %}
+                                  <div class="report-item__section">
+                                    <div class="report-item__head">
+                                      <div class="report-item__description">Contract {{ issue.contract }} Issue: {{ issue.title }}</div>
 
-                              <div class="report-item__badge report-item__badge_{% if issue.type == 'Warning' %}warning{% else %}information{% endif %}">{{ issue.type }}</div>
-                            </div>
-                            <div class="report-item__content report-item__content_information">
-                              <div class="report-item__row">
-                                <div class="report-item__label">Path</div>
-                                <div class="report-item__value">{{ item.file }}:{{ issue.lineno }}</div>
-                              </div>
-                              <div class="report-item__row">
-                                <div class="report-item__label">Function</div>
-                                <div class="report-item__value">{{ issue.function }}</div>
-                              </div>
-                              <div class="report-item__row">
-                                <div class="report-item__label">Address</div>
-                                <div class="report-item__value">{{ issue.address }}</div>
-                              </div>
-                              <div class="report-item__row">
-                                <div class="report-item__label">Debug</div>
-                                <div class="report-item__value">{{ issue.debug }}</div>
-                              </div>
-                              <div class="report-item__row">
-                                <div class="report-item__label">Description</div>
-                                <div class="report-item__value">{{ issue.description }}</div>
-                              </div>
-                              <div class="report-item__row">
-                                <div class="report-item__label">Code</div>
-                                <div class="report-item__value">{{ issue.code }}</div>
-                              </div>
-                            </div>
-                          </div>
-                        {% endfor %}
+                                      <div class="report-item__badge report-item__badge_{% if issue.type == 'Warning' %}warning{% else %}information{% endif %}">{{ issue.type }}</div>
+                                    </div>
+                                    <div class="report-item__content report-item__content_information">
+                                      <div class="report-item__row">
+                                        <div class="report-item__label">Path</div>
+                                        <div class="report-item__value">{{ item.file }}:{{ issue.lineno }}</div>
+                                      </div>
+                                      <div class="report-item__row">
+                                        <div class="report-item__label">Function</div>
+                                        <div class="report-item__value">{{ issue.function }}</div>
+                                      </div>
+                                      <div class="report-item__row">
+                                        <div class="report-item__label">Address</div>
+                                        <div class="report-item__value">{{ issue.address }}</div>
+                                      </div>
+                                      <div class="report-item__row">
+                                        <div class="report-item__label">Debug</div>
+                                        <div class="report-item__value">{{ issue.debug }}</div>
+                                      </div>
+                                      <div class="report-item__row">
+                                        <div class="report-item__label">Description</div>
+                                        <div class="report-item__value">{{ issue.description }}</div>
+                                      </div>
+                                      <div class="report-item__row">
+                                        <div class="report-item__label">Code</div>
+                                        <div class="report-item__value">{{ issue.code }}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                {% endfor %}
+                                </div>
+                             </li>
                       {% endif %}
-                      </div>
-                      {% endfor %}
-                      {% else %}
-                    {% endif %} 
-                    {% else %}
-                      <div class="isa_warning">
-                          <i class="fa fa-warning"></i>
-                          Report is empty.
-                      </div>
-                  {% endif %}
-                  </li>
+                  {% endfor %}
+                 {% else %}
+                     <div class="isa_warning">
+                         <i class="fa fa-warning"></i>
+                          Report is empty
+                     </div>
+                 {% endif %}
+              {% endif %}
                 </ul>
               </div>
             </div>
