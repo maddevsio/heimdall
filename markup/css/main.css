@@ -1035,7 +1035,9 @@
   background-size: 100% 100%;
   margin-top: -10px;
 }
-
+.mythril-logo{
+  height: 150px;
+}
 @media only screen and (max-width: 1439px) {
   .report {
     padding: 0 50px;
