@@ -30,7 +30,6 @@
                       {% if item.data.issues %}
                         <div class="report-item">
                           <h2 class="report-item__title">{{ item.file }}</h2>
-                        {% endif %}
                         {% for issue in item.data.issues %}
                           <div class="report-item__section">
                             <div class="report-item__head">
@@ -66,6 +65,7 @@
                             </div>
                           </div>
                         {% endfor %}
+                      {% endif %}
                       </div>
                       {% endfor %}
                       {% else %}
