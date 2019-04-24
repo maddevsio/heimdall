@@ -9,7 +9,7 @@ attrs==19.1.0
 backcall==0.1.0
 cchardet==2.1.4
 certifi==2019.3.9
-cffi==1.11.5
+cffi==1.12.3
 chardet==3.0.4
 coincurve==8.0.2
 configparser==3.5.0
