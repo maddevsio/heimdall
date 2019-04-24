@@ -1,0 +1,8 @@
+bundles: "python"
+report:
+  pullRequest:
+    findings: "onChangedLinesOnly"
+    comment: true
+notifications:
+  slack:
+    enabled: false
