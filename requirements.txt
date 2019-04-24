@@ -26,7 +26,7 @@ eth-rlp==0.1.2
 eth-tester==0.1.0b39
 eth-utils==1.5.1
 ethereum==2.3.2
-future==0.16.0
+future==0.17.1
 hexbytes==0.1.0
 idna==2.7
 idna-ssl==1.1.0
