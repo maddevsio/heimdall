@@ -33,7 +33,7 @@ idna-ssl==1.1.0
 ipython==7.4.0
 ipython-genutils==0.2.0
 jedi==0.13.3
-Jinja2==2.10
+Jinja2==2.10.1
 MarkupSafe==1.0
 mock==2.0.0
 multidict==4.3.1
