@@ -36,7 +36,7 @@ jedi==0.13.3
 Jinja2==2.10.1
 MarkupSafe==1.1.1
 mock==2.0.0
-multidict==4.3.1
+multidict==4.5.2
 mythril==0.18.10
 parsimonious==0.8.0
 parso==0.3.1
