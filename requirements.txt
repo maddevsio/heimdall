@@ -77,5 +77,5 @@ anybadge==1.1.1
 aiohttp-jinja2==1.1.0
 aioredis==1.2.0
 pycryptodome==3.8.1
-click==6.7
+click==7.0
 requests==2.20.1
