@@ -13,7 +13,7 @@ cffi==1.12.3
 chardet==3.0.4
 coincurve==11.0.0
 configparser==3.7.4
-coverage==4.5.1
+coverage==4.5.3
 cytoolz==0.9.0.1
 decorator==4.3.0
 dictionaries==0.0.1
