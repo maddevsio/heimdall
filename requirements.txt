@@ -70,7 +70,7 @@ urllib3==1.25
 wcwidth==0.1.7
 yarl==1.3.0
 z3-solver==4.8.0.0.post1
-zope.interface==4.5.0
+zope.interface==4.6.0
 gunicorn==19.9.0
 firebase-admin==2.12.0
 anybadge==1.1.1
