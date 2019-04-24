@@ -1,5 +1,7 @@
 # Heimdall   
-[![CircleCI](https://circleci.com/gh/maddevsio/heimdall/tree/master.svg?style=svg)](https://circleci.com/gh/maddevsio/heimdall/tree/master)  
+[![CircleCI](https://circleci.com/gh/maddevsio/heimdall/tree/master.svg?style=svg)](https://circleci.com/gh/maddevsio/heimdall/tree/master)
+![PyUP](https://pyup.io/repos/github/maddevsio/heimdall/shield.svg?t=1556087481437)
+
 Tool for analyzing smart contracts using mythril
 
 ![Heimdall ](http://i.imgur.com/IGicAt2.png)
