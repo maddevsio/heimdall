@@ -8,7 +8,7 @@ aiohttp-basicauth-middleware==1.1.0
 attrs==19.1.0
 backcall==0.1.0
 cchardet==2.1.4
-certifi==2018.4.16
+certifi==2019.3.9
 cffi==1.11.5
 chardet==3.0.4
 coincurve==8.0.2
