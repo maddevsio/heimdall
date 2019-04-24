@@ -76,6 +76,6 @@ firebase-admin==2.16.0
 anybadge==1.1.1
 aiohttp-jinja2==1.1.0
 aioredis==1.2.0
-pycryptodome==3.6.6
+pycryptodome==3.8.1
 click==6.7
 requests==2.20.1
