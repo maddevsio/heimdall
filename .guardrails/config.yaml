@@ -1,4 +1,4 @@
-bundles: "go"
+bundles: "python"
 report:
   pullRequest:
     findings: "onChangedLinesOnly"
