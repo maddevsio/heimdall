@@ -28,7 +28,7 @@ eth-utils==1.5.1
 ethereum==2.3.2
 future==0.17.1
 hexbytes==0.1.0
-idna==2.7
+idna==2.8
 idna-ssl==1.1.0
 ipython==6.5.0
 ipython-genutils==0.2.0
