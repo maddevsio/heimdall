@@ -59,7 +59,7 @@ pysha3==1.0.2
 PyYAML==5.1
 repoze.lru==0.7
 rlp==1.1.0
-scrypt==0.8.6
+scrypt==0.8.13
 semantic-version==2.6.0
 simplegeneric==0.8.1
 six==1.11.0
