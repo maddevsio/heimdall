@@ -46,7 +46,7 @@ persistent==4.4.3
 pexpect==4.7.0
 pickleshare==0.7.5
 plyvel==1.0.5
-prompt-toolkit==1.0.15
+prompt-toolkit==2.0.9
 ptyprocess==0.6.0
 py-ecc==1.4.3
 py-flags==1.1.2
