@@ -23,7 +23,7 @@ eth-hash==0.2.0
 eth-keyfile==0.5.1
 eth-keys==0.2.1
 eth-rlp==0.1.2
-eth-tester==0.1.0b29
+eth-tester==0.1.0b39
 eth-utils==1.0.3
 ethereum==2.3.2
 future==0.16.0
