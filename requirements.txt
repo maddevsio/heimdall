@@ -74,7 +74,7 @@ zope.interface==4.6.0
 gunicorn==19.9.0
 firebase-admin==2.16.0
 anybadge==1.1.1
-aiohttp-jinja2==1.1.0
+aiohttp-jinja2==1.1.1
 aioredis==1.2.0
 pycryptodome==3.8.1
 click==7.0
