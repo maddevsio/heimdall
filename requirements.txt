@@ -41,7 +41,7 @@ mythril==0.20.4
 parsimonious==0.8.1
 parso==0.4.0
 pbkdf2==1.3
-pbr==5.1.3
+pbr==5.2.0
 persistent==4.4.3
 pexpect==4.7.0
 pickleshare==0.7.5
