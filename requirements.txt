@@ -45,7 +45,7 @@ pbr==5.2.0
 persistent==4.4.3
 pexpect==4.7.0
 pickleshare==0.7.5
-plyvel==1.0.5
+plyvel==1.1.0
 prompt-toolkit==2.0.9
 ptyprocess==0.6.0
 py-ecc==1.6.0
